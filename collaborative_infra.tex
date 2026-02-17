@@ -41,113 +41,468 @@
 
 \begin{document}
 
+% Slide 1: Title
 \begin{frame}
 \titlepage{}
 \end{frame}
+\note[itemize]{
+  \item Welcome everyone
+  \item 25 min talk + 5 min Q\&A
+  \item Focus on vendor contribution model for infrastructure
+}
 
-\begin{lpicrblack}[chewy-I-rgDPLKogs-unsplash.jpg]{%
-  Photo by \href{https://unsplash.com/@chewy}{\underline{Chewy}}, CC0
-  }%
-  {%
-  \tableofcontents
-  }%
-  {}
+% Slide 2: Agenda
+\begin{grayframe}
   \frametitle{Agenda}
-\end{lpicrblack}
-
-\section[Introduction]{Introduction}
-
-\begin{sectionwithpic}[mike-benna-X-NAMq6uP3Q-unsplash.jpg]{Photo by \href{https://unsplash.com/@mbenna}{\underline{Mike Benna}}, CC0}
-\end{sectionwithpic}
-
-\begin{stripedframe}%
-  {%
-  Lorem ipsum dolor sit amet
-  }%
-  {%
-  consectetur adipiscing elit \\
-  \vspace{0.03\textheight}
-  sed do eiusmod tempor incididunt \\
-  \vspace{0.1\textheight}
-  \centering
-  \includesvg[width=0.08\paperwidth]{img/tekton-icon-white.svg}
-  }%
-  {%
-  ut labore et dolore magna aliqua \\
-  \vspace{0.03\textheight}
-  Ut enim ad minim veniam \\
-  \vspace{0.03\textheight}
-  quis nostrud exercitation
-  }%
-  {%
   \begin{itemize}
-    \item ullamco
-    \item laboris
+    \item The Infrastructure Challenge
+    \item PyTorch \& Multi-Cloud CI
+    \item Technical Architecture
+    \item Governance Model
+    \item Results \& Lessons Learned
   \end{itemize}
-  \vspace{0.01\textheight}
-  \begin{itemize}
-    \item nisi ut aliquip
-    \item ex ea commodo
-    \item consequat
-  \end{itemize}
-  }%
-  {%
-  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur
-  }%
-\end{stripedframe}
+\end{grayframe}
+\note[itemize]{
+  \item Brief overview of talk structure
+  \item 5 main sections covering problem, solution, implementation, governance, and outcomes
+}
 
-\begin{lgrayrwhiteframe}
-  \frametitle{Left Gray, Right White}
-  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-\end{lgrayrwhiteframe}
+% SECTION 1: THE CHALLENGE
+\section[The Challenge]{The Infrastructure Challenge}
 
-\section[Section With Pic]{Section With Pic}
-\begin{sectionwithpic}[cat-walking-on-stairs.jpg]{Public domain photo, CC0}
-\end{sectionwithpic}
-
-\begin{lpicrblack}[nadi-whatisdelirium-fZ8uf_L52wg-unsplash.jpg]{%
-  Photo by \href{https://unsplash.com/@whatisdelirium}{\underline{Nadi Whatisdelirium}}, CC0
-  }%
-  {%
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \\
-  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \\
-  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \\
-  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  }%
-  {0.42}%
-  \frametitle{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Left Pic, Right Black}
-\end{lpicrblack}
-
-\begin{lgrayframerpic}[thom-milkovic-FTNGfpYCpGM-unsplash.jpg]{%
-  Photo by \href{https://unsplash.com/@thommilkovic}{\underline{Thom Milkovic}}, CC0
-  }%
-  {%
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-  }%
-  {0.48}
-  \frametitle{Left Gray, Right Pic}
-\end{lgrayframerpic}
-
-\begin{2columnsframe}{Experiments \& Dogfooding}%
-  {%
-  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-  }{%
-  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-  }
-\end{2columnsframe}
-
-\section[Section With Pic]{Section With Pic}
-\begin{sectionwithpicrx}[julie_falk_flickr_22258190324_6a583208ae_k.png]{Photo by \href{https://www.flickr.com/photos/piper/}{\underline{Julie Falk}}, CC BY-NC 2.0}
-\end{sectionwithpicrx}
-
-\section[Q\&A]{Thank You! \\Questions?}
-
-\begin{sectionwithpiclargecentral}[carl-jorgensen-5nrnxx_tWe8-unsplash.jpg]{Brecon Beacons, Walse, Photo by \href{https://unsplash.com/@scamartist}{\underline{Carl Jorgensen}}, CC0}{1}
+\begin{sectionwithpiclargecentral}[mike-benna-X-NAMq6uP3Q-unsplash.jpg]{Photo by \href{https://unsplash.com/@mbenna}{\underline{Mike Benna}}, CC0}{1}
 \end{sectionwithpiclargecentral}
 
+% Slide 3: Scaling Open Source Infrastructure
+\begin{grayframe}
+  \frametitle{Scaling Open Source Infrastructure}
+  \textbf{The Problem:}
+  \begin{itemize}
+    \item Open source projects grow in complexity
+    \item Infrastructure costs scale exponentially
+    \item Traditional centralized funding models break down
+    \item Testing requirements multiply with platform diversity
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item As projects mature, they need more testing
+  \item More platforms = more infrastructure
+  \item Single sponsor model doesn't scale
+  \item Example: Testing on CPU, GPU, TPU, custom accelerators
+}
+
+% Slide 4: PyTorch's Unique Challenge
+\begin{grayframe}
+  \frametitle{PyTorch's Unique Challenge}
+  \textbf{A Leading ML Framework:}
+  \begin{itemize}
+    \item Connects ML practitioners with diverse hardware
+    \item CPU vendors: Intel, AMD, ARM
+    \item Accelerator vendors: NVIDIA, AMD, Intel, Google, AWS, etc.
+    \item Each vendor wants public CI to demonstrate support
+    \item Project cannot afford testing every platform
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item PyTorch is hardware-agnostic by design
+  \item Vendors have strong incentive to show their platform works
+  \item Public CI = marketing + quality assurance
+  \item Cost would be prohibitive for single entity
+}
+
+% SECTION 2: PYTORCH & MULTI-CLOUD CI
+\section[PyTorch Multi-Cloud CI]{PyTorch \& Multi-Cloud CI}
+
+\begin{sectionwithpiclargecentral}[cat-walking-on-stairs.jpg]{Public domain photo, CC0}{1}
+\end{sectionwithpiclargecentral}
+
+% Slide 5: The Multi-Cloud CI Working Group
+\begin{grayframe}
+  \frametitle{The Multi-Cloud CI Working Group}
+  \textbf{A New Approach:}
+  \begin{itemize}
+    \item Formed to address infrastructure sustainability
+    \item Vendor contribution model
+    \item Distribute costs while preserving project autonomy
+    \item Balance vendor participation with community control
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Working group brings together vendors and maintainers
+  \item Goal: sustainable infrastructure through shared responsibility
+  \item Key principle: project maintains control
+  \item Not just about money - also about engineering effort
+}
+
+% Slide 6: Contribution Models
+\begin{grayframe}
+  \frametitle{Vendor Contribution Models}
+  \textbf{Three Ways to Contribute:}
+  \begin{itemize}
+    \item \textbf{Compute Resources:} Vendor-managed runners
+    \item \textbf{Engineering Effort:} Integration, maintenance, support
+    \item \textbf{Cloud Credits:} Financial contribution for shared infrastructure
+  \end{itemize}
+  ~\\
+  \textbf{Proportional to Investment:} Vendors contribute based on their stake
+\end{grayframe}
+\note[itemize]{
+  \item Flexible model accommodates different vendor capabilities
+  \item Some vendors have spare compute, others prefer credits
+  \item Engineering effort is valuable - integration isn't free
+  \item Proportional model ensures fairness
+}
+
+% SECTION 3: TECHNICAL ARCHITECTURE
+\section[Technical Architecture]{Technical Architecture}
+
+\begin{sectionwithpiclargecentral}[nadi-whatisdelirium-fZ8uf_L52wg-unsplash.jpg]{Photo by \href{https://unsplash.com/@whatisdelirium}{\underline{Nadi Whatisdelirium}}, CC0}{1}
+\end{sectionwithpiclargecentral}
+
+% Slide 7: Cloud-Agnostic CI Design
+\begin{grayframe}
+  \frametitle{Cloud-Agnostic CI Design}
+  \textbf{Key Principles:}
+  \begin{itemize}
+    \item No vendor lock-in
+    \item Standardized runner interfaces
+    \item Portable CI definitions
+    \item Multi-cloud orchestration
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Architecture must work across AWS, GCP, Azure, on-prem
+  \item GitHub Actions as common interface
+  \item Self-hosted runners with standard configuration
+  \item Project can move workloads between vendors if needed
+}
+
+% Slide 8: Security Architecture
+\begin{grayframe}
+  \frametitle{Security \& Isolation}
+  \textbf{Security Considerations:}
+  \begin{itemize}
+    \item Vendor-managed runners in isolated environments
+    \item No access to project secrets
+    \item Network isolation and egress controls
+    \item Audit logging for all runner activity
+    \item Regular security reviews
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Trust but verify model
+  \item Vendors manage infrastructure but can't access sensitive data
+  \item Network policies prevent data exfiltration
+  \item Comprehensive logging for accountability
+  \item Security is non-negotiable
+}
+
+% Slide 9: Monitoring & Observability
+\begin{grayframe}
+  \frametitle{Monitoring \& Observability}
+  \textbf{Visibility Across Vendors:}
+  \begin{itemize}
+    \item Centralized metrics collection
+    \item Performance monitoring per vendor
+    \item Cost tracking and attribution
+    \item SLA monitoring and alerting
+    \item Public dashboards for transparency
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Need to see what's happening across all vendors
+  \item Track performance: build times, success rates
+  \item Understand true costs of each platform
+  \item Hold vendors accountable to SLAs
+  \item Transparency builds trust with community
+}
+
+% Slide 10: Runner Management
+\begin{grayframe}
+  \frametitle{Vendor-Managed Runners}
+  \textbf{Operational Model:}
+  \begin{itemize}
+    \item Vendors provision and maintain runners
+    \item Standard configuration templates
+    \item Automated scaling based on demand
+    \item Health checks and auto-remediation
+    \item Vendor-specific optimizations allowed
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Vendors know their platforms best
+  \item Project provides requirements, vendors implement
+  \item Auto-scaling reduces waste
+  \item Self-healing reduces maintenance burden
+  \item Vendors can optimize for their hardware
+}
+
+% SECTION 4: GOVERNANCE MODEL
+\section[Governance]{Governance Model}
+
+\begin{sectionwithpiclargecentral}[thom-milkovic-FTNGfpYCpGM-unsplash.jpg]{Photo by \href{https://unsplash.com/@thommilkovic}{\underline{Thom Milkovic}}, CC0}{1}
+\end{sectionwithpiclargecentral}
+
+% Slide 11: Governance Principles
+\begin{grayframe}
+  \frametitle{Governance Principles}
+  \textbf{Balancing Act:}
+  \begin{itemize}
+    \item Project autonomy preserved
+    \item Vendor participation encouraged
+    \item Community control maintained
+    \item Transparent decision-making
+    \item Fair representation
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Critical balance: accept help without losing control
+  \item Vendors are stakeholders, not owners
+  \item Community has final say on technical decisions
+  \item All decisions documented and public
+  \item No single vendor can dominate
+}
+
+% Slide 12: Working Group Structure
+\begin{grayframe}
+  \frametitle{Working Group Structure}
+  \textbf{Organization:}
+  \begin{itemize}
+    \item Regular meetings (bi-weekly/monthly)
+    \item Vendor representatives + maintainers
+    \item Technical subcommittees
+    \item Clear escalation paths
+    \item Public meeting notes
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Structured but not bureaucratic
+  \item Mix of vendor engineers and project maintainers
+  \item Subcommittees for deep technical work
+  \item Issues can be escalated to steering committee
+  \item Transparency through public notes
+}
+
+% Slide 13: Vendor Onboarding Process
+\begin{grayframe}
+  \frametitle{Vendor Onboarding}
+  \textbf{Standardized Process:}
+  \begin{itemize}
+    \item Technical requirements review
+    \item Security assessment
+    \item Pilot phase with limited workloads
+    \item Performance validation
+    \item Full integration after approval
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Not just "plug and play"
+  \item Vendors must meet technical standards
+  \item Security review is mandatory
+  \item Start small, prove reliability
+  \item Gradual rollout reduces risk
+}
+
+% Slide 14: Conflict Resolution
+\begin{grayframe}
+  \frametitle{Handling Conflicts}
+  \textbf{When Interests Diverge:}
+  \begin{itemize}
+    \item Clear decision-making authority
+    \item Project maintainers have final say
+    \item Vendor concerns heard but not binding
+    \item Documented rationale for decisions
+    \item Exit strategy for vendors
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Conflicts will happen - plan for them
+  \item Maintainers represent project interests
+  \item Vendors can voice concerns but can't veto
+  \item Transparency in decision rationale
+  \item Vendors can leave if unhappy (and vice versa)
+}
+
+% SECTION 5: RESULTS & LESSONS
+\section[Results]{Results \& Lessons Learned}
+
+\begin{sectionwithpiclargecentral}[julie_falk_flickr_22258190324_6a583208ae_k.png]{Photo by \href{https://www.flickr.com/photos/piper/}{\underline{Julie Falk}}, CC BY-NC 2.0}{1}
+\end{sectionwithpiclargecentral}
+
+% Slide 15: Platform Coverage Expansion
+\begin{grayframe}
+  \frametitle{Platform Coverage Expansion}
+  \textbf{Achievements:}
+  \begin{itemize}
+    \item X\% increase in platform coverage
+    \item New accelerator support (specific examples)
+    \item Reduced time-to-market for new platforms
+    \item Improved test reliability
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Quantify the success - use real numbers
+  \item Specific examples of new platforms added
+  \item Vendors can add support faster than before
+  \item Better infrastructure = more reliable tests
+}
+
+% Slide 16: Cost Savings & Sustainability
+\begin{grayframe}
+  \frametitle{Financial Impact}
+  \textbf{Sustainability Achieved:}
+  \begin{itemize}
+    \item Distributed infrastructure costs
+    \item Reduced burden on primary sponsor
+    \item Predictable scaling model
+    \item Long-term financial sustainability
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Model works financially
+  \item No single entity bears all costs
+  \item Can scale without financial crisis
+  \item Sustainable for years to come
+}
+
+% Slide 17: Vendor Experience
+\begin{grayframe}
+  \frametitle{Vendor Onboarding Experience}
+  \textbf{Feedback from Vendors:}
+  \begin{itemize}
+    \item Clear expectations and requirements
+    \item Reasonable onboarding timeline
+    \item Good technical support from maintainers
+    \item Fair governance model
+    \item Challenges: [specific examples]
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Vendors generally positive
+  \item Process is clear and documented
+  \item Maintainers are helpful
+  \item Governance feels fair
+  \item Be honest about challenges faced
+}
+
+% Slide 18: Lessons Learned
+\begin{grayframe}
+  \frametitle{Key Lessons Learned}
+  \textbf{What Worked:}
+  \begin{itemize}
+    \item Clear governance from day one
+    \item Security-first approach
+    \item Flexible contribution models
+    \item Transparent communication
+  \end{itemize}
+  ~\\
+  \textbf{What Was Hard:}
+  \begin{itemize}
+    \item Balancing vendor needs with project needs
+    \item Standardization across diverse platforms
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Governance clarity prevents conflicts
+  \item Security can't be an afterthought
+  \item Flexibility helps vendors participate
+  \item Transparency builds trust
+  \item Balance is ongoing challenge
+  \item Standardization requires compromise
+}
+
+% Slide 19: Applicability to Other Projects
+\begin{grayframe}
+  \frametitle{Applicability to Other LF Projects}
+  \textbf{Shared Challenges:}
+  \begin{itemize}
+    \item Accepting vendor infrastructure
+    \item Maintaining project neutrality
+    \item Ensuring transparency
+    \item Achieving financial sustainability
+  \end{itemize}
+  ~\\
+  \textbf{This Model Can Help:}
+  \begin{itemize}
+    \item Proven governance framework
+    \item Technical architecture patterns
+    \item Onboarding playbook
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Many LF projects face similar issues
+  \item Vendor contributions are common need
+  \item Neutrality is critical for LF projects
+  \item This model is reusable
+  \item Share learnings with community
+}
+
+% Slide 20: Future Directions
+\begin{grayframe}
+  \frametitle{Future Directions}
+  \textbf{What's Next:}
+  \begin{itemize}
+    \item Expand to more vendors
+    \item Improve automation and tooling
+    \item Share model with other projects
+    \item Refine governance based on experience
+    \item Build community of practice
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Model is working, now scale it
+  \item More automation reduces overhead
+  \item Help other projects adopt this
+  \item Governance will evolve
+  \item Create community around this approach
+}
+
+% Slide 21: Key Takeaways
+\begin{grayframe}
+  \frametitle{Key Takeaways}
+  \begin{itemize}
+    \item Infrastructure costs can be distributed sustainably
+    \item Vendor contributions work with right governance
+    \item Project autonomy and vendor participation can coexist
+    \item Security and transparency are non-negotiable
+    \item Model is applicable to other LF projects
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Summarize main points
+  \item Emphasize that this works
+  \item Governance is key to success
+  \item Security and transparency build trust
+  \item Encourage others to try this model
+}
+
+% SECTION 6: Q&A
+\section[Q\&A]{Questions?}
+
+\begin{sectionwithpiclargecentral}[carl-jorgensen-5nrnxx_tWe8-unsplash.jpg]{Brecon Beacons, Wales, Photo by \href{https://unsplash.com/@scamartist}{\underline{Carl Jorgensen}}, CC0}{1}
+\end{sectionwithpiclargecentral}
+
+% Slide 22: References & Contact
 \begin{blackframe}
-  \frametitle{References}
-  A list of references
+  \frametitle{References \& Contact}
+  \textbf{Resources:}
+  \begin{itemize}
+    \item PyTorch Multi-Cloud CI Working Group: [URL]
+    \item Documentation: [URL]
+    \item GitHub: [URL]
+  \end{itemize}
+  ~\\
+  \textbf{Contact:}
+  \begin{itemize}
+    \item Andrea Frittoli
+    \item andrea.frittoli@uk.ibm.com
+    \item \faTwitter ~@blackchip76 | \faGithub ~afrittoli
+  \end{itemize}
 \end{blackframe}
+\note[itemize]{
+  \item Provide resources for follow-up
+  \item Make yourself available for questions
+  \item Encourage people to reach out
+}
 
 \end{document}
