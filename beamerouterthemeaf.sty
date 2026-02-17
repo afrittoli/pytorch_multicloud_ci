@@ -22,6 +22,16 @@
   }
 }
 
+\newcommand{\setwhitefootline}[1]{
+  \setbeamercolor*{footline}{fg=white}
+  \setbeamertemplate{footline}{%
+    \ifx&#1&%
+      \parbox{0.9\linewidth}{\vspace*{-20pt}\hspace*{10pt}\insertdate}%
+      \parbox{0.1\linewidth}{\vspace*{-20pt}\hspace*{10pt}\insertframenumber/\inserttotalframenumber}%
+    \else\fi
+  }
+}
+
 \newcommand{\setblacklogofootline}{
   \setbeamercolor*{footline}{fg=myblack}
   \setbeamertemplate{footline}{%

@@ -9,9 +9,9 @@ Run the init.sh script:
 and remove this paragraph.
 Note that "filename" may not include underscore signs.
 
-# __TITLE__
+# Collaborative Infrastructure at Scale: PyTorch's Multi-Cloud CI Model
 
-Talk slides are available in [pdf](__FILE__.pdf).
+Talk slides are available in [pdf](collaborative_infra.pdf).
 A [script](demo_script.md) is available for the demo parts.
 
 ## Rebuilding the slides
@@ -24,7 +24,7 @@ Install the IBMPlex font from https://github.com/IBM/plex.
 To build the example just run:
 
 ```shell
-% xelatex __FILE__.tex
+% xelatex collaborative_infra.tex
 ```
 
-the output will be [__FILE__.pdf](__FILE__.pdf).
+the output will be [collaborative_infra.pdf](collaborative_infra.pdf).
