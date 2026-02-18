@@ -46,6 +46,20 @@
   \setwhitelogofootline{}
 }
 
+\newenvironment{tealframe}
+{
+  \setbeamercolor{background canvas}{bg=myteal!30}
+  \setbeamercolor*{frametitle}{fg=myblack}
+  \hypersetup{colorlinks,linkcolor=customdark,urlcolor=customdark}
+  \settextcolour{myblack}
+  \setblacklogofootline
+  \begin{frame}[c]
+}
+{
+  \end{frame}
+  \setwhitelogofootline{}
+}
+
 \newenvironment{lgrayrwhiteframe}
 {
   \setbeamercolor{background canvas}{bg=mylightgray}
@@ -335,6 +349,31 @@
   \end{frame}
 }
 
+\newenvironment<>{sectionwithpiclargecentraldark}[3][]
+{
+  \begin{frame}[t]
+    \begin{textblock*}{\paperwidth}(0cm,0cm)
+      \transparent{#3}%
+      \includegraphics[width=\paperwidth]{img/#1}
+      \transparent{1}%
+    \end{textblock*}
+    \begin{textblock*}{\paperwidth}(0cm,0.12\paperheight)%
+      \begin{beamercolorbox}[wd=\paperwidth]{section page header}%
+        \usebeamerfont{largecentral}%
+          \color{customdark}\centering\insertsection%
+      \end{beamercolorbox}%
+    \end{textblock*}
+    \begin{textblock*}{0.4\paperwidth}(0.005\paperwidth,0.97\paperheight)
+      \begin{beamercolorbox}[wd=0.4\paperwidth]{photolicense}
+        \usebeamerfont{photolicense}#2%
+      \end{beamercolorbox}%
+      \vfill
+    \end{textblock*}
+}
+{
+  \end{frame}
+}
+
 \newenvironment<>{sectionwithpicmediumcentral}[2][]
 {
   \begin{frame}[t]
@@ -380,12 +419,12 @@
       \vfill
     \end{textblock*}
     \ifstrempty{#4}{
-      \leftskip=0.55\paperwidth
+      \leftskip=0.40\paperwidth
       #3
     }{
       \begin{columns}
         \column{#4\paperwidth}
-        \column{0.48\paperwidth}
+        \column{0.40\paperwidth}
         #3
       \end{columns}
     }
@@ -422,7 +461,7 @@
 {
   \setbeamertemplate{background canvas}{%
     \begin{tikzpicture}[remember picture,overlay]
-      \node [rectangle, top color=customdark, bottom color=customdark, shading=axis, shading angle=33.02, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
+      \node [rectangle, top color=mydarkteal, bottom color=customdark, shading=axis, shading angle=33.02, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
     \end{tikzpicture}%
   }
   \setwhitelogofootline{}

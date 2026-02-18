@@ -41,116 +41,275 @@
 
 \begin{document}
 
-% Slide 1: Title
 \begin{frame}
 \titlepage{}
 \end{frame}
 \note[itemize]{
   \item Welcome everyone
   \item 25 min talk + 5 min Q\&A
-  \item Focus on vendor contribution model for infrastructure
+  \item Focus on collaborative infrastructure model for PyTorch
 }
 
-% Slide 2: Agenda
-\begin{grayframe}
-  \frametitle{Agenda}
+\begin{speakerframe}[af_wind.jpg]{Andrea Frittoli}%
+  {%
+  \faGithub ~afrittoli | \faLinkedin ~andreafrittoli | \faTwitter ~@blackchip76
+  }%
+  {%
   \begin{itemize}
-    \item The Infrastructure Challenge
-    \item PyTorch \& Multi-Cloud CI
-    \item Technical Architecture
-    \item Governance Model
-    \item Results \& Lessons Learned
+    \item{Open Source Advocate @ IBM}
+    \item{Lives in Wales, enjoys the wind}
+    \item{Multi-Cloud CI Working Group Lead}
+    \item{Member of PyTorch Infra Working Group}
+    \item{Tekton, CDEvents maintainer}
   \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Brief overview of talk structure
-  \item 5 main sections covering problem, solution, implementation, governance, and outcomes
-}
+  }%
+\end{speakerframe}
 
-% SECTION 1: THE CHALLENGE
-\section[The Challenge]{The Infrastructure Challenge}
+\begin{lpicrblack}[calum-lewis-vA1L1jRTM70-unsplash.jpg]{%
+  Photo by \href{https://unsplash.com/@calumlewis}{\underline{Calum Lewis}}, CC0
+  }%
+  {%
+  \tableofcontents
+  }%
+  {}
+  \frametitle{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Contents}
+\end{lpicrblack}
 
-\begin{sectionwithpiclargecentral}[mike-benna-X-NAMq6uP3Q-unsplash.jpg]{Photo by \href{https://unsplash.com/@mbenna}{\underline{Mike Benna}}, CC0}{1}
+% SECTION 1: PYTORCH & THE CHALLENGE
+\section[The Infrastructure Challenge]{The Infrastructure Challenge}
+
+\begin{sectionwithpiclargecentral}[denys-nevozhai-Zeu57mprpaI-unsplash.jpg]{Photo by \href{https://unsplash.com/@dnevozhai}{\underline{Denys Nevozhai}}, CC0}{1}
 \end{sectionwithpiclargecentral}
 
-% Slide 3: Scaling Open Source Infrastructure
 \begin{grayframe}
-  \frametitle{Scaling Open Source Infrastructure}
-  \textbf{The Problem:}
+  \frametitle{What is PyTorch?}
+  
+  \begin{columns}[T]
+    \column{0.55\textwidth}
+    \textbf{A Leading Open Source ML Framework:}
+    \begin{itemize}
+      \item Research and production ML workloads
+      \item Researchers, data scientists, ML engineers
+      \item (Distributed) Training, LLM, RL, Inference
+      \item Python API, C++ Core (libtorch)
+      \item Eager and Graph Mode (Inductor)
+      \item Rapid growth and adoption across industry
+    \end{itemize}
+    
+    \column{0.42\textwidth}
+    \hspace{0.3cm}
+    % Build Once, Run Anywhere Diagram - Top Right
+    \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}]
+      % User icon at top - Font Awesome icon
+      \node[circle, fill=custom2!20, minimum size=1cm] (userbg) at (0,3.8) {};
+      \node at (0,3.8) {\includegraphics[width=0.5cm]{img/user-icon.pdf}};
+      
+      % PyTorch layer
+      \node[draw, rectangle, rounded corners, fill=custom1!30, minimum width=3.2cm, minimum height=0.75cm, align=center] (pytorch) at (0,2.2) {\textbf{PyTorch}};
+      
+      % Arrow from user to pytorch
+      \draw[->, line width=1.5pt, custom1] (0,3.3) -- (pytorch.north);
+      
+      % Platform boxes at bottom - increased spacing
+      \node[draw, rectangle, rounded corners, fill=custom3!30, minimum width=1.3cm, minimum height=0.55cm, align=center, font=\scriptsize] (cpu) at (-2.2,0.3) {CPU};
+      \node[draw, rectangle, rounded corners, fill=custom3!30, minimum width=1.3cm, minimum height=0.55cm, align=center, font=\scriptsize] (gpu) at (-0.7,0.3) {GPU};
+      \node[draw, rectangle, rounded corners, fill=custom3!30, minimum width=1.3cm, minimum height=0.55cm, align=center, font=\scriptsize] (tpu) at (0.7,0.3) {TPU};
+      \node[draw, rectangle, rounded corners, fill=custom3!30, minimum width=1.3cm, minimum height=0.55cm, align=center, font=\scriptsize] (others) at (2.2,0.3) {Others};
+      
+      % Arrows from pytorch to platforms
+      \draw[->, line width=1pt, custom2] (pytorch.south) -- (cpu.north);
+      \draw[->, line width=1pt, custom2] (pytorch.south) -- (gpu.north);
+      \draw[->, line width=1pt, custom2] (pytorch.south) -- (tpu.north);
+      \draw[->, line width=1pt, custom2] (pytorch.south) -- (others.north);
+    \end{tikzpicture}
+  \end{columns}
+  
+  \vspace{0.05\textheight}
+  
+  % Timeline - Full Width at Bottom
+  \begin{center}
+  \begin{tikzpicture}[scale=0.9, every node/.style={scale=0.9}]
+    % Timeline line
+    \draw[line width=2pt, custom1] (0,0) -- (11,0);
+    
+    % Timeline points and labels
+    % 2016
+    \fill[custom1] (0,0) circle (4pt);
+    \draw[custom1, line width=1.5pt] (0,0) circle (6pt);
+    \node[above, align=center, text width=2cm] at (0,0.3) {\textbf{2016}\\Released by Meta};
+    
+    % 2018
+    \fill[custom2] (2.5,0) circle (4pt);
+    \draw[custom2, line width=1.5pt] (2.5,0) circle (6pt);
+    \node[above, align=center, text width=2cm] at (2.5,0.3) {\textbf{2018}\\PyTorch 1.0};
+    
+    % 2022
+    \fill[custom1] (5.5,0) circle (4pt);
+    \draw[custom1, line width=1.5pt] (5.5,0) circle (6pt);
+    \node[above, align=center, text width=2.5cm] at (5.5,0.3) {\textbf{2022}\\Foundation\\governance};
+    
+    % 2023
+    \fill[custom2] (8,0) circle (4pt);
+    \draw[custom2, line width=1.5pt] (8,0) circle (6pt);
+    \node[above, align=center, text width=2cm] at (8,0.3) {\textbf{2023}\\PyTorch 2.0};
+    
+    % 2024+
+    \fill[custom3] (11,0) circle (4pt);
+    \draw[custom3, line width=1.5pt] (11,0) circle (6pt);
+    \node[above, align=center, text width=2cm] at (11,0.3) {\textbf{2024+}\\Ecosystem\\Growth};
+  \end{tikzpicture}
+  \end{center}
+\end{grayframe}
+\note[itemize]{
+  \item Brief intro to PyTorch for those unfamiliar
+  \item Emphasize its role in ML ecosystem
+}
+
+\begin{tealframe}
+  \frametitle{The Vendor Community}
+  
+  \begin{tikzpicture}[remember picture, overlay]
+    % Left side - Operating Systems (evenly distributed vertically)
+    \node at (2.5, 2.2) {\includegraphics[height=1.1cm]{img/linux-logo.pdf}};
+    \node at (2.5, 0.5) {\includegraphics[height=1.1cm]{img/apple-logo.pdf}};
+    \node at (2.5, -1.2) {\includegraphics[height=1.1cm]{img/windows-logo.pdf}};
+    
+    % Right side - Hardware Vendors (evenly distributed)
+    \node at (6.5, 2.2) {\includegraphics[height=1cm]{img/intel-logo.pdf}};
+    \node at (6.5, 0.5) {\includegraphics[height=1cm]{img/nvidia-eye-logo.pdf}};
+    \node at (6.5, -1.2) {\includegraphics[height=1cm]{img/amd-logo.pdf}};
+    
+    \node at (10, 2.2) {\includegraphics[height=1cm]{img/arm-logo.pdf}};
+    
+    % Others box - bottom right
+    \node[draw, rounded corners, fill=custom3!40, minimum width=2.2cm, minimum height=0.9cm, align=center] at (10, -1.2) {\textbf{Others}};
+  \end{tikzpicture}
+\end{tealframe}
+\note[itemize]{
+  \item Show breadth of vendor ecosystem
+  \item Each has different hardware/software stack
+  \item Public CI = proof of support + quality signal
+  \item Marketing value for vendors
+  \item Quality assurance for users
+  \item But who pays for all this testing?
+}
+
+\begin{grayframe}
+  \frametitle{CI Infrastructure Today: By the Numbers}
+  \textbf{Scale of Operations:}
   \begin{itemize}
-    \item Open source projects grow in complexity
-    \item Infrastructure costs scale exponentially
-    \item Traditional centralized funding models break down
-    \item Testing requirements multiply with platform diversity
+    \item X,XXX CI jobs per day
+    \item XX different platform configurations
+    \item \$X.XM annual infrastructure costs
+    \item XX hours of compute per day
+    \item Growing XX\% year over year
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
-  \item As projects mature, they need more testing
-  \item More platforms = more infrastructure
-  \item Single sponsor model doesn't scale
-  \item Example: Testing on CPU, GPU, TPU, custom accelerators
+  \item Use real numbers to show scale
+  \item Emphasize growth trajectory
+  \item Cost is significant and growing
+  \item This is just for CI, not including other infrastructure
+  \item Unsustainable without new model
 }
 
-% Slide 4: PyTorch's Unique Challenge
 \begin{grayframe}
-  \frametitle{PyTorch's Unique Challenge}
-  \textbf{A Leading ML Framework:}
+  \frametitle{The Challenges}
+  \textbf{Scale Challenges:}
   \begin{itemize}
-    \item Connects ML practitioners with diverse hardware
-    \item CPU vendors: Intel, AMD, ARM
-    \item Accelerator vendors: NVIDIA, AMD, Intel, Google, AWS, etc.
-    \item Each vendor wants public CI to demonstrate support
-    \item Project cannot afford testing every platform
+    \item \textbf{Engineering:} Maintaining integrations for all platforms
+    \item \textbf{Financial:} Infrastructure costs growing faster than funding
+  \end{itemize}
+  ~\\
+  \textbf{Security Challenges:}
+  \begin{itemize}
+    \item Vendor-contributed infrastructure must be secure
+    \item Cannot compromise project or user security
+  \end{itemize}
+  ~\\
+  \textbf{Experience Challenges:}
+  \begin{itemize}
+    \item Maintain high-quality end-user experience
+    \item Preserve contributor workflow
+    \item Provide clear path for vendor engagement
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
-  \item PyTorch is hardware-agnostic by design
-  \item Vendors have strong incentive to show their platform works
-  \item Public CI = marketing + quality assurance
-  \item Cost would be prohibitive for single entity
+  \item Three interconnected challenges
+  \item Scale: both people and money
+  \item Security: can't just accept any infrastructure
+  \item Experience: can't degrade quality while scaling
+  \item Need solution that addresses all three
 }
 
-% SECTION 2: PYTORCH & MULTI-CLOUD CI
-\section[PyTorch Multi-Cloud CI]{PyTorch \& Multi-Cloud CI}
+% SECTION 2: PYTORCH FOUNDATION & WORKING GROUPS
+\section[PyTorch Foundation]{PyTorch Foundation \& Working Groups}
 
 \begin{sectionwithpiclargecentral}[cat-walking-on-stairs.jpg]{Public domain photo, CC0}{1}
 \end{sectionwithpiclargecentral}
 
-% Slide 5: The Multi-Cloud CI Working Group
 \begin{grayframe}
-  \frametitle{The Multi-Cloud CI Working Group}
-  \textbf{A New Approach:}
+  \frametitle{The PyTorch Foundation}
+  \textbf{Organizational Structure:}
   \begin{itemize}
-    \item Formed to address infrastructure sustainability
-    \item Vendor contribution model
-    \item Distribute costs while preserving project autonomy
-    \item Balance vendor participation with community control
+    \item Part of the Linux Foundation
+    \item Neutral home for PyTorch project
+    \item Hosts multiple related projects
+    \item Provides governance framework
+    \item Enables vendor collaboration
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
-  \item Working group brings together vendors and maintainers
-  \item Goal: sustainable infrastructure through shared responsibility
-  \item Key principle: project maintains control
-  \item Not just about money - also about engineering effort
+  \item Foundation provides neutral ground
+  \item Not controlled by single company
+  \item Multiple projects under umbrella
+  \item Governance structure enables collaboration
+  \item Foundation model enables vendor participation
 }
 
-% Slide 6: Contribution Models
+\begin{grayframe}
+  \frametitle{Working Groups Addressing the Challenges}
+  \textbf{Three Key Working Groups:}
+  \begin{itemize}
+    \item \textbf{Multi-Cloud CI WG:} Infrastructure sustainability \& scale
+    \item \textbf{Accelerator Integration WG:} Platform integration \& engineering
+    \item \textbf{Security WG:} Security standards \& practices
+  \end{itemize}
+  ~\\
+  \textbf{Collaborative Approach:} Vendors + maintainers working together
+\end{grayframe}
+\note[itemize]{
+  \item Three WGs created to tackle the challenges
+  \item Multi-Cloud CI: focus of this talk
+  \item Accelerator Integration: technical integration work
+  \item Security: ensuring vendor contributions are secure
+  \item All three work together
+  \item Mix of vendor engineers and project maintainers
+}
+
 \begin{grayframe}
   \frametitle{Vendor Contribution Models}
   \textbf{Three Ways to Contribute:}
   \begin{itemize}
-    \item \textbf{Compute Resources:} Vendor-managed runners
+    \item \textbf{Compute Resources:} Multiple integration levels
     \item \textbf{Engineering Effort:} Integration, maintenance, support
     \item \textbf{Cloud Credits:} Financial contribution for shared infrastructure
   \end{itemize}
   ~\\
-  \textbf{Proportional to Investment:} Vendors contribute based on their stake
+  \textbf{Flexible \& Proportional:}
+  \begin{itemize}
+    \item Vendors choose contribution model that fits them
+    \item Contribution proportional to their investment/stake
+  \end{itemize}
 \end{grayframe}
 \note[itemize]{
-  \item Flexible model accommodates different vendor capabilities
-  \item Some vendors have spare compute, others prefer credits
-  \item Engineering effort is valuable - integration isn't free
+  \item Three main contribution types
+  \item Compute: not just vendor-managed runners (more detail coming)
+  \item Engineering: valuable contribution, integration isn't free
+  \item Credits: for vendors who prefer financial contribution
+  \item Flexibility helps vendors participate
   \item Proportional model ensures fairness
+  \item Will detail compute integration levels in technical section
 }
 
 % SECTION 3: TECHNICAL ARCHITECTURE
@@ -159,7 +318,6 @@
 \begin{sectionwithpiclargecentral}[nadi-whatisdelirium-fZ8uf_L52wg-unsplash.jpg]{Photo by \href{https://unsplash.com/@whatisdelirium}{\underline{Nadi Whatisdelirium}}, CC0}{1}
 \end{sectionwithpiclargecentral}
 
-% Slide 7: Cloud-Agnostic CI Design
 \begin{grayframe}
   \frametitle{Cloud-Agnostic CI Design}
   \textbf{Key Principles:}
@@ -177,7 +335,6 @@
   \item Project can move workloads between vendors if needed
 }
 
-% Slide 8: Security Architecture
 \begin{grayframe}
   \frametitle{Security \& Isolation}
   \textbf{Security Considerations:}
@@ -197,7 +354,6 @@
   \item Security is non-negotiable
 }
 
-% Slide 9: Monitoring & Observability
 \begin{grayframe}
   \frametitle{Monitoring \& Observability}
   \textbf{Visibility Across Vendors:}
@@ -217,7 +373,6 @@
   \item Transparency builds trust with community
 }
 
-% Slide 10: Runner Management
 \begin{grayframe}
   \frametitle{Vendor-Managed Runners}
   \textbf{Operational Model:}
@@ -238,12 +393,11 @@
 }
 
 % SECTION 4: GOVERNANCE MODEL
-\section[Governance]{Governance Model}
+\section[Governance Model]{Governance Model}
 
 \begin{sectionwithpiclargecentral}[thom-milkovic-FTNGfpYCpGM-unsplash.jpg]{Photo by \href{https://unsplash.com/@thommilkovic}{\underline{Thom Milkovic}}, CC0}{1}
 \end{sectionwithpiclargecentral}
 
-% Slide 11: Governance Principles
 \begin{grayframe}
   \frametitle{Governance Principles}
   \textbf{Balancing Act:}
@@ -263,7 +417,6 @@
   \item No single vendor can dominate
 }
 
-% Slide 12: Working Group Structure
 \begin{grayframe}
   \frametitle{Working Group Structure}
   \textbf{Organization:}
@@ -283,7 +436,6 @@
   \item Transparency through public notes
 }
 
-% Slide 13: Vendor Onboarding Process
 \begin{grayframe}
   \frametitle{Vendor Onboarding}
   \textbf{Standardized Process:}
@@ -303,7 +455,6 @@
   \item Gradual rollout reduces risk
 }
 
-% Slide 14: Conflict Resolution
 \begin{grayframe}
   \frametitle{Handling Conflicts}
   \textbf{When Interests Diverge:}
@@ -324,12 +475,11 @@
 }
 
 % SECTION 5: RESULTS & LESSONS
-\section[Results]{Results \& Lessons Learned}
+\section[Results \& Next Steps]{Results \& Lessons Learned}
 
 \begin{sectionwithpiclargecentral}[julie_falk_flickr_22258190324_6a583208ae_k.png]{Photo by \href{https://www.flickr.com/photos/piper/}{\underline{Julie Falk}}, CC BY-NC 2.0}{1}
 \end{sectionwithpiclargecentral}
 
-% Slide 15: Platform Coverage Expansion
 \begin{grayframe}
   \frametitle{Platform Coverage Expansion}
   \textbf{Achievements:}
@@ -347,7 +497,6 @@
   \item Better infrastructure = more reliable tests
 }
 
-% Slide 16: Cost Savings & Sustainability
 \begin{grayframe}
   \frametitle{Financial Impact}
   \textbf{Sustainability Achieved:}
@@ -365,7 +514,6 @@
   \item Sustainable for years to come
 }
 
-% Slide 17: Vendor Experience
 \begin{grayframe}
   \frametitle{Vendor Onboarding Experience}
   \textbf{Feedback from Vendors:}
@@ -385,7 +533,6 @@
   \item Be honest about challenges faced
 }
 
-% Slide 18: Lessons Learned
 \begin{grayframe}
   \frametitle{Key Lessons Learned}
   \textbf{What Worked:}
@@ -411,7 +558,6 @@
   \item Standardization requires compromise
 }
 
-% Slide 19: Applicability to Other Projects
 \begin{grayframe}
   \frametitle{Applicability to Other LF Projects}
   \textbf{Shared Challenges:}
@@ -437,7 +583,6 @@
   \item Share learnings with community
 }
 
-% Slide 20: Future Directions
 \begin{grayframe}
   \frametitle{Future Directions}
   \textbf{What's Next:}
@@ -457,7 +602,6 @@
   \item Create community around this approach
 }
 
-% Slide 21: Key Takeaways
 \begin{grayframe}
   \frametitle{Key Takeaways}
   \begin{itemize}
@@ -482,7 +626,6 @@
 \begin{sectionwithpiclargecentral}[carl-jorgensen-5nrnxx_tWe8-unsplash.jpg]{Brecon Beacons, Wales, Photo by \href{https://unsplash.com/@scamartist}{\underline{Carl Jorgensen}}, CC0}{1}
 \end{sectionwithpiclargecentral}
 
-% Slide 22: References & Contact
 \begin{blackframe}
   \frametitle{References \& Contact}
   \textbf{Resources:}
