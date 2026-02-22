@@ -520,9 +520,10 @@
 % #4 Test in the middle
 \newenvironment<>{speakerframe}[4][]
 {
-  \setbeamertemplate{background canvas}{%
-    \begin{tikzpicture}[remember picture,overlay]
-      \node [rectangle, top color=mydarkteal, bottom color=customdark, shading=axis, shading angle=33.02, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
+  \setbeamertemplate{background}{%
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+      \shade[top color=mydarkteal, bottom color=customdark, shading=axis, shading angle=33.02] (0,0) rectangle (\the\paperwidth, \the\paperheight);
     \end{tikzpicture}%
   }
   \setwhitelogofootline{}

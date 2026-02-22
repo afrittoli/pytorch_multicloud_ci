@@ -163,3 +163,9 @@ TSWLatexianTemp*
 .vscode
 tekton/.secrets
 **/.$*
+
+# TikZ cache for faster builds
+tikz-cache/
+
+# Inkscape SVG to PDF conversion
+svg-inkscape/

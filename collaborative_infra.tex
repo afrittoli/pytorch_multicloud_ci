@@ -1,7 +1,11 @@
 \RequirePackage{pdfmanagement-testphase}
 \DeclareDocumentMetadata{}
 
-\documentclass[aspectratio=169,11pt,hyperref={colorlinks=true}]{beamer}
+\ifdefined\DRAFTMODE
+  \documentclass[aspectratio=169,11pt,hyperref={colorlinks=true},draft]{beamer}
+\else
+  \documentclass[aspectratio=169,11pt,hyperref={colorlinks=true}]{beamer}
+\fi
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{fontspec}
@@ -9,9 +13,11 @@
 \usepackage{listingsutf8}
 \usepackage{listings-golang}
 \usepackage{tikz}
+\usetikzlibrary{external}
+\tikzexternalize[prefix=tikz-cache/]
 \usepackage{color}
 \usepackage{fontawesome5}
-\usepackage{svg}
+% \usepackage{svg}
 \usepackage{transparent}
 
 
@@ -320,11 +326,11 @@
   \small
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 }{%
-  \textbf{CI Infra}\\
+  \textbf{Accelerator Integration}\\
   \small
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 }{%
-  \textbf{Accelerator Integration}\\
+  \textbf{CI Infra}\\
   \small
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 }{%
