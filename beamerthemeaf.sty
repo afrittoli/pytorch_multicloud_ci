@@ -276,6 +276,23 @@
   \end{frame}
 }
 
+% top dark bottom picture
+\newenvironment{tdarkbpicframe}[1]
+{
+  \setbeamercolor*{frametitle}{fg=white}
+  \settextcolour{white}
+  \setbeamercolor{background canvas}{bg=myblack}
+  \setwhitelogofootline{}
+  \begin{frame}[c]
+    \frametitle{#1}
+    \vspace{-0.15\paperheight}
+}
+{
+  \vspace{0.05\paperheight}
+  \end{frame}
+  \setblacklogofootline
+}
+
 \newenvironment<>{sectionwithpic}[2][]
 {
   \begin{frame}[t]

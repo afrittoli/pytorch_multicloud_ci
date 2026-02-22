@@ -88,8 +88,8 @@
     \column{0.55\textwidth}
     \textbf{A Leading Open Source ML Framework:}
     \begin{itemize}
-      \item Research and production ML workloads
       \item Researchers, data scientists, ML engineers
+      \item Research and production ML workloads
       \item (Distributed) Training, LLM, RL, Inference
       \item Python API, C++ Core (libtorch)
       \item Eager and Graph Mode (Inductor)
@@ -165,68 +165,84 @@
   \item Emphasize its role in ML ecosystem
 }
 
-\begin{tealframe}
-  \frametitle{The Vendor Community}
-  
-  \begin{tikzpicture}[remember picture, overlay]
-    % Left side - Operating Systems (evenly distributed vertically)
-    \node at (2.5, 2.2) {\includegraphics[height=1.1cm]{img/linux-logo.pdf}};
-    \node at (2.5, 0.5) {\includegraphics[height=1.1cm]{img/apple-logo.pdf}};
-    \node at (2.5, -1.2) {\includegraphics[height=1.1cm]{img/windows-logo.pdf}};
-    
-    % Right side - Hardware Vendors (evenly distributed)
-    \node at (6.5, 2.2) {\includegraphics[height=1cm]{img/intel-logo.pdf}};
-    \node at (6.5, 0.5) {\includegraphics[height=1cm]{img/nvidia-eye-logo.pdf}};
-    \node at (6.5, -1.2) {\includegraphics[height=1cm]{img/amd-logo.pdf}};
-    
-    \node at (10, 2.2) {\includegraphics[height=1cm]{img/arm-logo.pdf}};
-    
-    % Others box - bottom right
-    \node[draw, rounded corners, fill=custom3!40, minimum width=2.2cm, minimum height=0.9cm, align=center] at (10, -1.2) {\textbf{Others}};
+{
+\setbeamercolor*{frametitle}{fg=white}
+\settextcolour{white}
+\setbeamercolor{background canvas}{bg=myblack}
+\setbeamertemplate{background}{
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+    \fill[color=myblack] (0, 0.45\paperheight) rectangle (\the\paperwidth, \the\paperheight);
   \end{tikzpicture}
+}
+\setwhitelogofootlinewithsource{data from hud.pytorch.org}
+\begin{frame}[c]
+  \frametitle{CI/CD Infrastructure Today}
+  \vspace{-0.15\paperheight}
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \begin{itemize}
+      \item \~{}1M\$ monthly infrastructure costs
+      \item \~{}1M hours of compute per month
+      \item \~{}100 distinct PRs/day
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{~}
+    \begin{itemize}
+      \item \~{}1.3k Compute-intensive Workflows/day
+      \item Growing year over year
+    \end{itemize}
+  \end{columns}
+  \begin{textblock*}{0.85\paperwidth}(0.075\paperwidth,0.44\paperheight)
+    \centering
+    \tiny
+    \code{pytorch/pytorch} repo only, numbers are estimated
+  \end{textblock*}
+
+  \vspace{0.15\paperheight}
+  \begin{textblock*}{0.85\paperwidth}(0.075\paperwidth,0.48\paperheight)
+    \centering
+    \includegraphics[width=0.85\paperwidth,height=0.38\paperheight,keepaspectratio]{img/pytorch_ci_jobs_daily.png}
+  \end{textblock*}
+  \vspace{0.05\paperheight}
+\end{frame}
+\setblacklogofootline
+}
+\note[itemize]{
+  \item Discuss about the current scale
+  \item Explain numbers and source of data
+  \item Discuss growth matrix and fleet expansion
+}
+
+\begin{tealframe}
+  \frametitle{An Expanding Test Matrix}
+  
+  \begin{center}
+    \includegraphics[width=0.9\textwidth,height=0.75\textheight,keepaspectratio]{img/test_matrix_diagram.png}
+  \end{center}
 \end{tealframe}
 \note[itemize]{
   \item Show breadth of vendor ecosystem
-  \item Each has different hardware/software stack
-  \item Public CI = proof of support + quality signal
-  \item Marketing value for vendors
-  \item Quality assurance for users
-  \item But who pays for all this testing?
-}
-
-\begin{grayframe}
-  \frametitle{CI Infrastructure Today: By the Numbers}
-  \textbf{Scale of Operations:}
-  \begin{itemize}
-    \item X,XXX CI jobs per day
-    \item XX different platform configurations
-    \item \$X.XM annual infrastructure costs
-    \item XX hours of compute per day
-    \item Growing XX\% year over year
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Use real numbers to show scale
-  \item Emphasize growth trajectory
-  \item Cost is significant and growing
-  \item This is just for CI, not including other infrastructure
-  \item Unsustainable without new model
+  \item Not too much detail
+  \item Explain test matrix at high level and where it's growing
 }
 
 \begin{grayframe}
   \frametitle{The Challenges}
   \textbf{Scale Challenges:}
   \begin{itemize}
-    \item \textbf{Engineering:} Maintaining integrations for all platforms
-    \item \textbf{Financial:} Infrastructure costs growing faster than funding
+    \item \textbf{Engineering:} Managing a Diverse Fleet, Access to Platforms
+    \item \textbf{Financial:} Reconcile Community Wishes with Budget Constraints
   \end{itemize}
-  ~\\
+  {\tiny~\\}
   \textbf{Security Challenges:}
   \begin{itemize}
-    \item Vendor-contributed infrastructure must be secure
-    \item Cannot compromise project or user security
+    \item Infrastructure from public clouds and private pool
+    \item Central Administration
+    \item Trusted Builds
   \end{itemize}
-  ~\\
+  {\tiny~\\}
   \textbf{Experience Challenges:}
   \begin{itemize}
     \item Maintain high-quality end-user experience
@@ -245,8 +261,28 @@
 % SECTION 2: PYTORCH FOUNDATION & WORKING GROUPS
 \section[PyTorch Foundation]{PyTorch Foundation \& Working Groups}
 
-\begin{sectionwithpiclargecentral}[cat-walking-on-stairs.jpg]{Public domain photo, CC0}{1}
-\end{sectionwithpiclargecentral}
+{
+\definecolor{pytorchpurple}{HTML}{812CE5}
+\definecolor{pytorchmagenta}{HTML}{B932CC}
+\definecolor{pytorchred}{HTML}{E12353}
+\setbeamertemplate{background}{%
+  \begin{tikzpicture}
+    \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+    \shade[left color=pytorchpurple, middle color=pytorchmagenta, right color=pytorchred, shading angle=135]
+      (0,0) rectangle (\the\paperwidth, \the\paperheight);
+  \end{tikzpicture}%
+}
+\setwhitelogofootline{}
+\begin{frame}[t]
+  \begin{textblock*}{\paperwidth}(0cm,0.12\paperheight)%
+    \begin{beamercolorbox}[wd=\paperwidth]{section page header}%
+      \usebeamerfont{largecentral}%
+        \color{white}\centering\insertsection%
+    \end{beamercolorbox}%
+  \end{textblock*}
+\end{frame}
+\setblacklogofootline
+}
 
 \begin{grayframe}
   \frametitle{The PyTorch Foundation}
