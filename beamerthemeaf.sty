@@ -180,6 +180,50 @@
   \end{frame}
   \setblacklogofootline
 }
+\newenvironment{4squaresext}[5]
+{
+  \setbeamercolor*{frametitle}{fg=white}
+  \settextcolour{myblack}
+  \setwhitelogofootline{}
+  \setbeamertemplate{background}{
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+      % Title bar extended down to create overlap
+      \fill[color=myblack] (0, 0.81\paperheight) rectangle (\the\paperwidth, \the\paperheight);
+      % Darker overlay in center overlap area
+      % \fill[color=myblack, opacity=0.3] (0.46\paperwidth, 0.79\paperheight) rectangle (0.49\paperwidth, 0.86\paperheight);
+      % Four colored squares
+      \fill[color=mylightgray, opacity=0.8] (0.46\paperwidth, 0) rectangle (\the\paperwidth, 0.44\paperheight);
+      \fill[color=custom3, opacity=0.8] (0, 0) rectangle (0.49\paperwidth, 0.44\paperheight);
+      \fill[color=custom1, opacity=0.8] (0, 0.39\paperheight) rectangle (0.49\paperwidth, 0.86\paperheight);
+      \fill[color=custom2, opacity=0.8] (0.46\paperwidth, 0.39\paperheight) rectangle (\the\paperwidth, 0.86\paperheight);
+    \end{tikzpicture}
+  }
+  \begin{frame}[c]
+    \frametitle{#1}
+    \begin{textblock*}{0.46\paperwidth}(0.03\paperwidth,0.15\paperheight)
+      \settextcolour{white}
+      #2
+    \end{textblock*}
+    \begin{textblock*}{0.46\paperwidth}(0.49\paperwidth,0.15\paperheight)
+      \settextcolour{white}
+      #3
+    \end{textblock*}
+    \begin{textblock*}{0.46\paperwidth}(0.03\paperwidth,0.57\paperheight)
+      \settextcolour{white}
+      #4
+    \end{textblock*}
+    \begin{textblock*}{0.46\paperwidth}(0.49\paperwidth,0.57\paperheight)
+      \settextcolour{customdark}
+      #5
+    \end{textblock*}
+
+}
+{
+  \end{frame}
+  \setblacklogofootline
+}
+
 
 \newenvironment{stripedframe}[5]
 {

@@ -218,9 +218,15 @@
 \begin{tealframe}
   \frametitle{An Expanding Test Matrix}
   
-  \begin{center}
-    \includegraphics[width=0.9\textwidth,height=0.75\textheight,keepaspectratio]{img/test_matrix_diagram.png}
-  \end{center}
+  \begin{textblock*}{0.44\paperwidth}(0.04\paperwidth,0.25\paperheight)
+    \centering
+    \includegraphics[width=0.44\paperwidth,height=0.65\paperheight,keepaspectratio]{img/test_matrix_diagram.png}
+  \end{textblock*}
+  
+  \begin{textblock*}{0.44\paperwidth}(0.52\paperwidth,0.35\paperheight)
+    \centering
+    \includegraphics[width=0.44\paperwidth,keepaspectratio]{img/infra-pie.png}
+  \end{textblock*}
 \end{tealframe}
 \note[itemize]{
   \item Show breadth of vendor ecosystem
@@ -286,41 +292,51 @@
 
 \begin{grayframe}
   \frametitle{The PyTorch Foundation}
-  \textbf{Organizational Structure:}
-  \begin{itemize}
-    \item Part of the Linux Foundation
-    \item Neutral home for PyTorch project
-    \item Hosts multiple related projects
-    \item Provides governance framework
-    \item Enables vendor collaboration
-  \end{itemize}
+  \begin{columns}[T]
+    \column{0.38\textwidth}
+    \begin{itemize}
+      \item Part of the Linux Foundation
+      \item Neutral home for PyTorch project
+      \item Hosts multiple projects
+      \item Thought Leadership (GB)
+      \item Technical Leadership (TAC)
+      \item Marketing \& Outreach
+    \end{itemize}
+    
+    \column{0.60\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{img/pytorch-foundation.png}
+  \end{columns}
 \end{grayframe}
 \note[itemize]{
   \item Foundation provides neutral ground
   \item Not controlled by single company
   \item Multiple projects under umbrella
   \item Governance structure enables collaboration
-  \item Foundation model enables vendor participation
 }
 
-\begin{grayframe}
-  \frametitle{Working Groups Addressing the Challenges}
-  \textbf{Three Key Working Groups:}
-  \begin{itemize}
-    \item \textbf{Multi-Cloud CI WG:} Infrastructure sustainability \& scale
-    \item \textbf{Accelerator Integration WG:} Platform integration \& engineering
-    \item \textbf{Security WG:} Security standards \& practices
-  \end{itemize}
-  ~\\
-  \textbf{Collaborative Approach:} Vendors + maintainers working together
-\end{grayframe}
+\begin{4squaresext}{Working Groups}{%
+  \textbf{Multi-Cloud CI}\\
+  \small
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+}{%
+  \textbf{CI Infra}\\
+  \small
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+}{%
+  \textbf{Accelerator Integration}\\
+  \small
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+}{%
+  \textbf{Security}\\
+  \small
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+}
+\end{4squaresext}
 \note[itemize]{
-  \item Three WGs created to tackle the challenges
-  \item Multi-Cloud CI: focus of this talk
-  \item Accelerator Integration: technical integration work
-  \item Security: ensuring vendor contributions are secure
-  \item All three work together
-  \item Mix of vendor engineers and project maintainers
+  \item Four working groups shown in overlapping squares
+  \item Multi-Cloud CI and CI Infra on the left
+  \item Accelerator Integration and Security on the right
 }
 
 \begin{grayframe}
