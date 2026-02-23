@@ -442,6 +442,7 @@
   \end{itemize}
   ~\\
   \textbf{Addressing the Challenges:}
+  % TODO
   % This should be a 3x2 table, columns are the three challenge dimensions
   % rows are advantages and challenges
   % Having multiple integration models solves some issues but creates complexity
@@ -487,7 +488,7 @@
     \item Security
     \item All PRs
   \end{itemize}
-  % Include requirements-per-role on the side
+  % TODO Include requirements-per-role on the side
 \end{grayframe}
 \note[itemize]{
   \item Different roles have different requirements
@@ -517,7 +518,7 @@
     \item Average Job Queue Time (p95/3 months)
     \item Engineering Commitment (on-call, slack, meetings)
   \end{itemize}
-  % On the left side diagram that shows example of
+  % TODO On the left side diagram that shows example of
   % time to attain, time to disable (diagrams-SLOs.png)
 \end{grayframe}
 \note[itemize]{
@@ -532,7 +533,7 @@
 
 \begin{grayframe}
   \frametitle{Contribution Process}
-  % Diagram diagrams-Process.png
+  % TODO Diagram diagrams-Process.png
   ~\\
   \begin{itemize}
     \item Working Group provides guidance and recommendations
@@ -560,13 +561,12 @@
 }
 
 \begin{grayframe}
-  \frametitle{Central Administration \& Scalability}
+  \frametitle{Central Administration \& Visibility}
   \textbf{Maintaining Manageability at Scale:}
   \begin{itemize}
-    \item \textbf{Standardized Interfaces:} Common runner configuration and APIs
-    \item \textbf{Centralized Monitoring:} Unified metrics across all vendors
-    \item \textbf{Automated Onboarding:} Self-service tools reduce manual work
-    \item \textbf{Clear Documentation:} Vendor playbooks and integration guides
+    \item Common software stack across clouds\\Reusable by vendors too
+    \item Vendor playbooks, reusable IaaC
+    \item Self-service Tools with Central Admin Override
   \end{itemize}
   ~\\
   \textbf{Visibility \& Control:}
@@ -574,8 +574,8 @@
     \item \textbf{Public Dashboards:} Transparency for community and vendors
     \item \textbf{Cost Tracking:} Attribution per vendor and workload type
     \item \textbf{Performance Metrics:} Build times, success rates, SLA compliance
-    \item \textbf{Audit Logging:} Comprehensive logging for all runner activity
   \end{itemize}
+  % TODO Probably one Hud and one GHARTS screenshot for this
 \end{grayframe}
 \note[itemize]{
   \item System must remain manageable as it grows
@@ -597,24 +597,31 @@
 \end{sectionwithpiclargecentral}
 
 \begin{grayframe}
+  \frametitle{High Level Architecture}
+  % TODO pytorch-multi-cloud-infra-Overview.png
+\end{grayframe}
+
+\begin{grayframe}
   \frametitle{Public Cloud Infrastructure}
   \textbf{Current AWS Setup:}
   \begin{itemize}
     \item Primary infrastructure hosted on AWS
+    \item Two accounts, funded by AWS Credits and Meta
     \item Self-hosted GitHub Actions runners
     \item Managed by PyTorch CI/CD team
     \item Autoscaling based on workload demand
   \end{itemize}
   ~\\
-  \textbf{Multi-Cloud Working Group Initiatives:}
+  \textbf{Multi-Cloud \& Infra Working Group Initiatives:}
   \begin{itemize}
-    \item \textbf{Portable CI Jobs:} Standardizing workflow definitions for cloud-agnostic execution
-    \item \textbf{Reusable Autoscaler:} Developing cloud-agnostic autoscaling solution
-    \item \textbf{Infrastructure as Code:} Terraform modules for consistent deployment
-    \item \textbf{Collaboration with Infra Team:} Joint development and testing
+    \item \textbf{Portable CI Jobs:} Run in a container, remove cloud-specific assumptions
+    \item \textbf{Reusable Autoscaler:} Developing portable autoscale based on ARC
+    \item \textbf{Infrastructure as Code:} Reusable terraform modules
   \end{itemize}
+  % TODO Use the prototype architecture picture here
 \end{grayframe}
 \note[itemize]{
+  % TODO here on in-slide, link back to original challenges
   \item AWS is the foundation, but not the only option
   \item Multi-cloud WG working to make system portable
   \item Autoscaler being generalized for other clouds
@@ -626,21 +633,17 @@
 
 \begin{grayframe}
   \frametitle{Vendor-Managed GitHub Runners}
+    % TODO reminder of original challenges, specific for this?
   \textbf{GitHub Actions Runner Token Service (GHARTS):}
   \begin{itemize}
-    \item Secure token distribution for self-hosted runners
-    \item Centralized authentication and authorization
-    \item Automated runner registration and lifecycle management
+    \item Secure, self-service API to register self-hosted runners
+    \item No long-lived credentials, on demand short-lived tokens
+    \item Enforcement of runner metadata (label, group) and quotas
+    \item Central administration, bulk operations
     \item Audit logging for all runner operations
+    \item MVP being deployed, IBM to trial service
   \end{itemize}
-  ~\\
-  \textbf{Benefits:}
-  \begin{itemize}
-    \item \textbf{Security:} No long-lived tokens, centralized access control
-    \item \textbf{Scalability:} Automated runner provisioning and deprovisioning
-    \item \textbf{Visibility:} Centralized monitoring and metrics collection
-    \item \textbf{Vendor Integration:} Standardized interface for all vendors
-  \end{itemize}
+  % TODO Use the GHARTS dashboard screenshots
 \end{grayframe}
 \note[itemize]{
   \item GHARTS solves key security and scalability challenges
@@ -655,22 +658,15 @@
 
 \begin{grayframe}
   \frametitle{GHARTS Architecture}
-  \textbf{Components:}
-  \begin{itemize}
-    \item \textbf{Token Service:} Issues short-lived runner registration tokens
-    \item \textbf{Runner Manager:} Handles runner lifecycle and health checks
-    \item \textbf{Metrics Collector:} Aggregates performance and usage data
-    \item \textbf{Policy Engine:} Enforces security and access policies
-  \end{itemize}
-  ~\\
   \textbf{Workflow:}
   \begin{itemize}
-    \item Vendor requests token from GHARTS
-    \item GHARTS validates vendor credentials and policies
-    \item Short-lived token issued for runner registration
-    \item Runner registers with GitHub using token
-    \item GHARTS monitors runner health and collects metrics
-    \item Token expires, runner deregisters automatically
+    \item Vendor authenticates using existing credentials (LFID)
+    \item Vendor requests a JIT config from GHARTS using the JWT % TODO JWT
+    \item GHARTS verifies AuthN and AuthZ for vendor
+    \item GHARTS requests JIT config from GitHub
+    \item Vendor uses JIT config to provision a runner
+    \item JIT lasts 1h, and can only be used Once
+    % TODO Use workflow diagram
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
@@ -686,9 +682,8 @@
 
 \begin{grayframe}
   \frametitle{Vendor-Managed Test Systems}
-  \textbf{Accelerator Integration Process:}
+  \textbf{Accelerator Integration Working Group Initiative:}
   \begin{itemize}
-    \item Developed by Accelerator Integration Working Group
     \item Loosely coupled with GitHub Actions
     \item Vendors provide test infrastructure and environments
     \item CI triggers tests via webhooks or API calls
@@ -726,11 +721,10 @@
   ~\\
   \textbf{Ongoing Work:}
   \begin{itemize}
-    \item \textbf{Standardized Result Format:} Common schema for test results
-    \item \textbf{Centralized Dashboard:} Unified view of all test systems
-    \item \textbf{Event Relay:} Real-time test status updates
-    \item \textbf{Metrics Collection:} Performance and reliability tracking
-    \item \textbf{Debugging Tools:} Log aggregation and analysis
+    \item a
+    \item b
+    % TODO Discuss GitHub dependent workflow
+    % TODO Considering alternatives OpenTelemetry / CDEvents
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
@@ -745,105 +739,6 @@
   \item Balance between vendor autonomy and project needs
 }
 
-\begin{grayframe}
-  \frametitle{Vendor Contribution Models}
-  \textbf{Three Ways to Contribute:}
-  \begin{itemize}
-    \item \textbf{Compute Resources:} Multiple integration levels
-    \item \textbf{Engineering Effort:} Integration, maintenance, support
-    \item \textbf{Cloud Credits:} Financial contribution for shared infrastructure
-  \end{itemize}
-  ~\\
-  \textbf{Flexible \& Proportional:}
-  \begin{itemize}
-    \item Vendors choose contribution model that fits them
-    \item Contribution proportional to their investment/stake
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Three main contribution types
-  \item Compute: not just vendor-managed runners (more detail coming)
-  \item Engineering: valuable contribution, integration isn't free
-  \item Credits: for vendors who prefer financial contribution
-  \item Flexibility helps vendors participate
-  \item Proportional model ensures fairness
-  \item Will detail compute integration levels in technical section
-}
-
-\begin{grayframe}
-  \frametitle{Cloud-Agnostic CI Design}
-  \textbf{Key Principles:}
-  \begin{itemize}
-    \item No vendor lock-in
-    \item Standardized runner interfaces
-    \item Portable CI definitions
-    \item Multi-cloud orchestration
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Architecture must work across AWS, GCP, Azure, on-prem
-  \item GitHub Actions as common interface
-  \item Self-hosted runners with standard configuration
-  \item Project can move workloads between vendors if needed
-}
-
-\begin{grayframe}
-  \frametitle{Security \& Isolation}
-  \textbf{Security Considerations:}
-  \begin{itemize}
-    \item Vendor-managed runners in isolated environments
-    \item No access to project secrets
-    \item Network isolation and egress controls
-    \item Audit logging for all runner activity
-    \item Regular security reviews
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Trust but verify model
-  \item Vendors manage infrastructure but can't access sensitive data
-  \item Network policies prevent data exfiltration
-  \item Comprehensive logging for accountability
-  \item Security is non-negotiable
-}
-
-\begin{grayframe}
-  \frametitle{Monitoring \& Observability}
-  \textbf{Visibility Across Vendors:}
-  \begin{itemize}
-    \item Centralized metrics collection
-    \item Performance monitoring per vendor
-    \item Cost tracking and attribution
-    \item SLA monitoring and alerting
-    \item Public dashboards for transparency
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Need to see what's happening across all vendors
-  \item Track performance: build times, success rates
-  \item Understand true costs of each platform
-  \item Hold vendors accountable to SLAs
-  \item Transparency builds trust with community
-}
-
-\begin{grayframe}
-  \frametitle{Vendor-Managed Runners}
-  \textbf{Operational Model:}
-  \begin{itemize}
-    \item Vendors provision and maintain runners
-    \item Standard configuration templates
-    \item Automated scaling based on demand
-    \item Health checks and auto-remediation
-    \item Vendor-specific optimizations allowed
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Vendors know their platforms best
-  \item Project provides requirements, vendors implement
-  \item Auto-scaling reduces waste
-  \item Self-healing reduces maintenance burden
-  \item Vendors can optimize for their hardware
-}
-
 % SECTION 5: RESULTS & LESSONS
 \section[Results \& Next Steps]{Results \& Lessons Learned}
 
@@ -854,6 +749,8 @@
   \frametitle{Platform Coverage Expansion}
   \textbf{Achievements:}
   \begin{itemize}
+    % TODO: describe vendors onboarded via each interface
+    % Public Cloud, Runner Pools, Vendor Systems
     \item X\% increase in platform coverage
     \item New accelerator support (specific examples)
     \item Reduced time-to-market for new platforms
@@ -868,25 +765,11 @@
 }
 
 \begin{grayframe}
-  \frametitle{Financial Impact}
-  \textbf{Sustainability Achieved:}
-  \begin{itemize}
-    \item Distributed infrastructure costs
-    \item Reduced burden on primary sponsor
-    \item Predictable scaling model
-    \item Long-term financial sustainability
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Model works financially
-  \item No single entity bears all costs
-  \item Can scale without financial crisis
-  \item Sustainable for years to come
-}
-
-\begin{grayframe}
   \frametitle{Vendor Onboarding Experience}
-  \textbf{Feedback from Vendors:}
+  % TODO: Ongoing initiatives IBM on GHARTS
+  % Don't have onboarding expeience from Vendor Systems
+  % RedHat for Vendor System visibility
+  % Vendors happy to share their experience and collaborate
   \begin{itemize}
     \item Clear expectations and requirements
     \item Reasonable onboarding timeline
@@ -905,6 +788,13 @@
 
 \begin{grayframe}
   \frametitle{Key Lessons Learned}
+  % TODO Key slide, maybe merged with the next one
+  % I want to highlight key principles that can be
+  % reused by other project
+  % How to protect everyone's interest in a fair way
+  % Remove attrition and avoid stale
+  % Engage vendors, let them help build the solution
+  % Empower infra maintainers, care about scale
   \textbf{What Worked:}
   \begin{itemize}
     \item Clear governance from day one
@@ -956,6 +846,9 @@
 \begin{grayframe}
   \frametitle{Future Directions}
   \textbf{What's Next:}
+  % TODO ongoing activities in short
+  % Most what's next has already been presented
+  % Maybe add more about monitoring?
   \begin{itemize}
     \item Expand to more vendors
     \item Improve automation and tooling
@@ -974,6 +867,8 @@
 
 \begin{grayframe}
   \frametitle{Key Takeaways}
+  % TODO this sounds like another repeat of what's said already
+  % Probably going away, may move the slide above down here
   \begin{itemize}
     \item Infrastructure costs can be distributed sustainably
     \item Vendor contributions work with right governance
@@ -998,6 +893,7 @@
 
 \begin{blackframe}
   \frametitle{References \& Contact}
+  % TODO fill this in
   \textbf{Resources:}
   \begin{itemize}
     \item PyTorch Multi-Cloud CI Working Group: [URL]
