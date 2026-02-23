@@ -371,7 +371,122 @@
   \item Discuss overalps and collaborations
 }
 
-% SECTION 3: TECHNICAL ARCHITECTURE
+% SECTION 3: GOVERNANCE MODEL
+\section[Governance Model]{Governance Model}
+
+\begin{sectionwithpiclargecentral}[khampha-phimmachak-IRUcIOMOiEI-unsplash.jpg]{Photo by \href{https://unsplash.com/@khampha}{\underline{Khampha Phimmachak}}, CC0}{1}
+\end{sectionwithpiclargecentral}
+
+\begin{stripedframe}{Personas: A Balancing Act}{%
+  \textbf{End Users}
+  \vspace{0.3em}
+  \begin{itemize}
+    \item Stable software
+    \item Available on my dev platform
+    \item Available on my prod platform
+    \item Following the industry at speed
+  \end{itemize}
+}{%
+  \textbf{Platform Vendors}
+  \vspace{0.3em}
+  \begin{itemize}
+    \item PyTorch for my platform
+    \item Demonstrate platform compatibility
+    \item Low bar to contribution of infrastructure
+    \item Clear guidance and processes
+  \end{itemize}
+}{%
+  \textbf{Project Maintainers}
+  \vspace{0.3em}
+  \begin{itemize}
+    \item Project Success
+    \item Stay relevant for end-users
+    \item High quality secure builds
+    \item Manageable CI/CD System (scale)
+    \item Smooth CI/CD experience for contributors
+  \end{itemize}
+}{%
+  \textbf{PyTorch Foundation}
+  \vspace{0.3em}
+  \begin{itemize}
+    \item Ensure Vendor Neutrality
+    \item Vendor participation encouraged
+    \item Fair representation
+    \item Financial sustainability
+  \end{itemize}
+}
+\end{stripedframe}
+\note[itemize]{
+  \item Project autonomy preserved
+  \item Vendor participation encouraged
+  \item Community control maintained
+  \item Transparent decision-making
+  \item Fair representation
+  \item Critical balance: accept help without losing control
+  \item Vendors are stakeholders, not owners
+  \item Community has final say on technical decisions
+  \item All decisions documented and public
+  \item No single vendor can dominate
+}
+
+\begin{grayframe}
+  \frametitle{Working Group Structure}
+  \textbf{Organization:}
+  \begin{itemize}
+    \item Regular meetings (bi-weekly/monthly)
+    \item Vendor representatives + maintainers
+    \item Technical subcommittees
+    \item Clear escalation paths
+    \item Public meeting notes
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Structured but not bureaucratic
+  \item Mix of vendor engineers and project maintainers
+  \item Subcommittees for deep technical work
+  \item Issues can be escalated to steering committee
+  \item Transparency through public notes
+}
+
+\begin{grayframe}
+  \frametitle{Vendor Onboarding}
+  \textbf{Standardized Process:}
+  \begin{itemize}
+    \item Technical requirements review
+    \item Security assessment
+    \item Pilot phase with limited workloads
+    \item Performance validation
+    \item Full integration after approval
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Not just "plug and play"
+  \item Vendors must meet technical standards
+  \item Security review is mandatory
+  \item Start small, prove reliability
+  \item Gradual rollout reduces risk
+}
+
+\begin{grayframe}
+  \frametitle{Handling Conflicts}
+  \textbf{When Interests Diverge:}
+  \begin{itemize}
+    \item Clear decision-making authority
+    \item Project maintainers have final say
+    \item Vendor concerns heard but not binding
+    \item Documented rationale for decisions
+    \item Exit strategy for vendors
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Conflicts will happen - plan for them
+  \item Maintainers represent project interests
+  \item Vendors can voice concerns but can't veto
+  \item Transparency in decision rationale
+  \item Vendors can leave if unhappy (and vice versa)
+}
+
+% SECTION 4: TECHNICAL ARCHITECTURE
 \section[Technical Architecture]{Technical Architecture}
 
 \begin{sectionwithpiclargecentral}[nadi-whatisdelirium-fZ8uf_L52wg-unsplash.jpg]{Photo by \href{https://unsplash.com/@whatisdelirium}{\underline{Nadi Whatisdelirium}}, CC0}{1}
@@ -474,88 +589,6 @@
   \item Auto-scaling reduces waste
   \item Self-healing reduces maintenance burden
   \item Vendors can optimize for their hardware
-}
-
-% SECTION 4: GOVERNANCE MODEL
-\section[Governance Model]{Governance Model}
-
-\begin{sectionwithpiclargecentral}[thom-milkovic-FTNGfpYCpGM-unsplash.jpg]{Photo by \href{https://unsplash.com/@thommilkovic}{\underline{Thom Milkovic}}, CC0}{1}
-\end{sectionwithpiclargecentral}
-
-\begin{grayframe}
-  \frametitle{Governance Principles}
-  \textbf{Balancing Act:}
-  \begin{itemize}
-    \item Project autonomy preserved
-    \item Vendor participation encouraged
-    \item Community control maintained
-    \item Transparent decision-making
-    \item Fair representation
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Critical balance: accept help without losing control
-  \item Vendors are stakeholders, not owners
-  \item Community has final say on technical decisions
-  \item All decisions documented and public
-  \item No single vendor can dominate
-}
-
-\begin{grayframe}
-  \frametitle{Working Group Structure}
-  \textbf{Organization:}
-  \begin{itemize}
-    \item Regular meetings (bi-weekly/monthly)
-    \item Vendor representatives + maintainers
-    \item Technical subcommittees
-    \item Clear escalation paths
-    \item Public meeting notes
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Structured but not bureaucratic
-  \item Mix of vendor engineers and project maintainers
-  \item Subcommittees for deep technical work
-  \item Issues can be escalated to steering committee
-  \item Transparency through public notes
-}
-
-\begin{grayframe}
-  \frametitle{Vendor Onboarding}
-  \textbf{Standardized Process:}
-  \begin{itemize}
-    \item Technical requirements review
-    \item Security assessment
-    \item Pilot phase with limited workloads
-    \item Performance validation
-    \item Full integration after approval
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Not just "plug and play"
-  \item Vendors must meet technical standards
-  \item Security review is mandatory
-  \item Start small, prove reliability
-  \item Gradual rollout reduces risk
-}
-
-\begin{grayframe}
-  \frametitle{Handling Conflicts}
-  \textbf{When Interests Diverge:}
-  \begin{itemize}
-    \item Clear decision-making authority
-    \item Project maintainers have final say
-    \item Vendor concerns heard but not binding
-    \item Documented rationale for decisions
-    \item Exit strategy for vendors
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Conflicts will happen - plan for them
-  \item Maintainers represent project interests
-  \item Vendors can voice concerns but can't veto
-  \item Transparency in decision rationale
-  \item Vendors can leave if unhappy (and vice versa)
 }
 
 % SECTION 5: RESULTS & LESSONS

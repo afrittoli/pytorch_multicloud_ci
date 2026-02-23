@@ -233,31 +233,32 @@
   \setbeamertemplate{background}{
       \begin{tikzpicture}
         \useasboundingbox (0, 0) rectangle(\the\paperwidth,\the\paperheight);
-        \fill[color=myblack, opacity=0.8] (0, 0) rectangle (0.25\paperwidth, 0.7\paperheight);
-        \fill[color=custom1, opacity=0.8] (0.20\paperwidth, 0) rectangle (0.50\paperwidth, 0.7\paperheight);
-        \fill[color=custom2, opacity=0.8] (0.45\paperwidth, 0) rectangle (0.75\paperwidth, 0.7\paperheight);
-        \fill[color=custom3, opacity=0.8] (0.7\paperwidth, 0) rectangle (\the\paperwidth, 0.7\paperheight);
-        \fill[color=mylightgray] (0, 0.7\paperheight) rectangle (\paperwidth, \paperheight);
+        % Title bar
+        \fill[color=myblack] (0, 0.86\paperheight) rectangle (\paperwidth, \paperheight);
+        % Columns extending from bottom to title bar with equal usable space
+        % Usable space per column: 0.2125, overlap: 0.05
+        \fill[color=myblack, opacity=0.8] (0, 0) rectangle (0.2625\paperwidth, 0.86\paperheight);
+        \fill[color=custom1, opacity=0.8] (0.2125\paperwidth, 0) rectangle (0.525\paperwidth, 0.86\paperheight);
+        \fill[color=custom2, opacity=0.8] (0.475\paperwidth, 0) rectangle (0.7875\paperwidth, 0.86\paperheight);
+        \fill[color=custom3, opacity=0.8] (0.7375\paperwidth, 0) rectangle (\the\paperwidth, 0.86\paperheight);
       \end{tikzpicture}
   	}
   \begin{frame}[t]
-    \setbeamercolor{normal text}{fg=titlegray}
-    \usebeamercolor[fg]{normal text}
-    \LARGE\centering #1
-    \setbeamercolor{normal text}{fg=white}
-    \usebeamercolor[fg]{normal text}
-    \vspace{0.1\paperheight}
+    \frametitle{#1}
     \normalsize
-    \begin{columns}[T,totalwidth=0.98\textwidth]
-      \column{0.20\textwidth}
-        #2
-      \column{0.20\textwidth}
-        #3
-      \column{0.20\textwidth}
-        #4
-      \column{0.20\textwidth}
-        #5
-    \end{columns}
+    % Position text in the usable (non-overlapping) area of each column
+    \begin{textblock*}{0.2\paperwidth}(0.01\paperwidth,0.20\paperheight)
+      #2
+    \end{textblock*}
+    \begin{textblock*}{0.2\paperwidth}(0.2725\paperwidth,0.20\paperheight)
+      #3
+    \end{textblock*}
+    \begin{textblock*}{0.2\paperwidth}(0.535\paperwidth,0.20\paperheight)
+      #4
+    \end{textblock*}
+    \begin{textblock*}{0.2\paperwidth}(0.7975\paperwidth,0.20\paperheight)
+      #5
+    \end{textblock*}
 }
 {
   \end{frame}
