@@ -242,6 +242,13 @@
 
 \begin{grayframe}
   \frametitle{The Challenges}
+  \textbf{Community Challenges:}
+  \begin{itemize}
+    \item Maintain high-quality end-user experience
+    \item Preserve contributor workflow
+    \item Provide clear path for vendor engagement
+  \end{itemize}
+  {\tiny~\\}
   \textbf{Scale Challenges:}
   \begin{itemize}
     \item \textbf{Engineering:} Managing a Diverse Fleet, Access to Platforms
@@ -250,24 +257,20 @@
   {\tiny~\\}
   \textbf{Security Challenges:}
   \begin{itemize}
-    \item Infrastructure from public clouds and private pool
+    \item Trust and Consistency in a diverse environment
     \item Central Administration
     \item Trusted Builds
   \end{itemize}
-  {\tiny~\\}
-  \textbf{Experience Challenges:}
-  \begin{itemize}
-    \item Maintain high-quality end-user experience
-    \item Preserve contributor workflow
-    \item Provide clear path for vendor engagement
-  \end{itemize}
 \end{grayframe}
 \note[itemize]{
+  \item With the expanion of the fleet:
   \item Three interconnected challenges
   \item Scale: both people and money
   \item Security: can't just accept any infrastructure
-  \item Experience: can't degrade quality while scaling
+  \item Community: can't degrade quality while scaling
+  \item Explain what I mean by community challenges
   \item Need solution that addresses all three
+  \item Consistency may not be the right word, I mean ensuring things are not compromised or altered
 }
 
 % SECTION 2: PYTORCH FOUNDATION & WORKING GROUPS
@@ -430,55 +433,125 @@
 }
 
 \begin{grayframe}
-  \frametitle{Working Group Structure}
-  \textbf{Organization:}
+  \frametitle{Integration Models}
+  \textbf{Three Ways to Contribute Infrastructure:}
   \begin{itemize}
-    \item Regular meetings (bi-weekly/monthly)
-    \item Vendor representatives + maintainers
-    \item Technical subcommittees
-    \item Clear escalation paths
-    \item Public meeting notes
+    \item \textbf{Public Cloud Credits:} Financial contribution for shared infrastructure
+    \item \textbf{Vendor-Managed Runner Pools:} Tightly integrated with GitHub Actions
+    \item \textbf{Vendor-Managed Test Infrastructure:} Loosely integrated with GitHub
+  \end{itemize}
+  ~\\
+  \textbf{Addressing the Challenges:}
+  % This should be a 3x2 table, columns are the three challenge dimensions
+  % rows are advantages and challenges
+  % Having multiple integration models solves some issues but creates complexity
+  % at the same time, which should go in the notes
+  % For the table content:
+  % Community advantages: Flexible models accommodate different vendor capabilities
+  % Community challenges: Hide the underlying infra complexity to contributors
+  % Scale advantages: Outsourcing engineering with vendor-managed setups
+  % Scale challenges: Consistent tech stack required for public cloud credits. Consistent metrics and monitoring across the board.
+  % Security advantages: More loosely coupled systems cannot compromise core CI system
+  % Security challenges: Ensure security best practices on vendor managed infrastructure
+  \begin{itemize}
+    \item \textbf{Community:} Flexible models accommodate different vendor capabilities
+    \item \textbf{Scale:} Distributed compute resources and engineering effort
+    \item \textbf{Security:} Standardized security requirements across all models
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
-  \item Structured but not bureaucratic
-  \item Mix of vendor engineers and project maintainers
-  \item Subcommittees for deep technical work
-  \item Issues can be escalated to steering committee
-  \item Transparency through public notes
+  \item Three main contribution types
+  \item Credits: for vendors who prefer financial contribution
+  \item Runner Pools: vendors provision and maintain runners with GitHub integration
+  \item Test Infrastructure: vendors provide test environments with looser coupling
+  \item Flexibility helps vendors participate
+  \item Each model addresses the scale, security, and experience challenges
+  \item Technical details will be covered in architecture section
 }
 
 \begin{grayframe}
-  \frametitle{Vendor Onboarding}
-  \textbf{Standardized Process:}
+  \frametitle{Roles \& Requirements}
+  Least privilege access to cloud resources:
   \begin{itemize}
-    \item Technical requirements review
-    \item Security assessment
-    \item Pilot phase with limited workloads
-    \item Performance validation
-    \item Full integration after approval
+    \item CI/CD Jobs specify nodes access level required
+    \item CI/CD Runners are assigned a role
+    \item Roles define the level of access to resources
+    \item Roles identified: tester, builder, publisher, releaser
+  \end{itemize}
+  ~\\
+  Requirements for Runners:
+  \begin{itemize}
+    \item Configuration
+    \item Provisioning
+    \item Monitoring
+    \item Security
+    \item All PRs
+  \end{itemize}
+  % Include requirements-per-role on the side
+\end{grayframe}
+\note[itemize]{
+  \item Different roles have different requirements
+  \item Testers can tolerate some downtime, releasers cannot
+  \item Security requirements scale with privilege level
+  \item Publishers and releasers need highest security (access to secrets, signing keys)
+  \item All roles require monitoring and audit logging
+  \item SLOs help vendors understand expectations
+  \item Clear requirements enable better planning
+}
+
+\begin{grayframe}
+  \frametitle{Triggers \& SLOs}
+  Trigger levels for CI/CD jobs:
+  \begin{itemize}
+    \item On-demand only
+    \item Periodic nightly
+    \item Periodic multi-times per day
+    \item Specific PRs only
+    \item All PRs
+  \end{itemize}
+  ~\\
+  Service Level Objectives:
+  \begin{itemize}
+    \item Availability \%
+    \item Reliability (Num of infra failures)
+    \item Average Job Queue Time (p95/3 months)
+    \item Engineering Commitment (on-call, slack, meetings)
+  \end{itemize}
+  % On the left side diagram that shows example of
+  % time to attain, time to disable (diagrams-SLOs.png)
+\end{grayframe}
+\note[itemize]{
+  \item Different roles have different requirements
+  \item Testers can tolerate some downtime, releasers cannot
+  \item Security requirements scale with privilege level
+  \item Publishers and releasers need highest security (access to secrets, signing keys)
+  \item All roles require monitoring and audit logging
+  \item SLOs help vendors understand expectations
+  \item Clear requirements enable better planning
+}
+
+\begin{grayframe}
+  \frametitle{Contribution Process}
+  % Diagram diagrams-Process.png
+  ~\\
+  \begin{itemize}
+    \item Working Group provides guidance and recommendations
+    \item Infra team verify checks for compliance
+    \item TAC Community for final approval
+    \item Monitoring for SLOs
+    \item Transparent process with clear requirements
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
-  \item Not just "plug and play"
-  \item Vendors must meet technical standards
+  \item Clear process reduces friction
+  \item Not just "plug and play" - vendors must meet standards
   \item Security review is mandatory
   \item Start small, prove reliability
   \item Gradual rollout reduces risk
-}
-
-\begin{grayframe}
-  \frametitle{Handling Conflicts}
-  \textbf{When Interests Diverge:}
-  \begin{itemize}
-    \item Clear decision-making authority
-    \item Project maintainers have final say
-    \item Vendor concerns heard but not binding
-    \item Documented rationale for decisions
-    \item Exit strategy for vendors
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
+  \item Maintainers represent project interests
+  \item Vendors can voice concerns but can't veto
+  \item Transparency in decision rationale
+  \item All decisions documented and public
   \item Conflicts will happen - plan for them
   \item Maintainers represent project interests
   \item Vendors can voice concerns but can't veto
@@ -486,11 +559,191 @@
   \item Vendors can leave if unhappy (and vice versa)
 }
 
+\begin{grayframe}
+  \frametitle{Central Administration \& Scalability}
+  \textbf{Maintaining Manageability at Scale:}
+  \begin{itemize}
+    \item \textbf{Standardized Interfaces:} Common runner configuration and APIs
+    \item \textbf{Centralized Monitoring:} Unified metrics across all vendors
+    \item \textbf{Automated Onboarding:} Self-service tools reduce manual work
+    \item \textbf{Clear Documentation:} Vendor playbooks and integration guides
+  \end{itemize}
+  ~\\
+  \textbf{Visibility \& Control:}
+  \begin{itemize}
+    \item \textbf{Public Dashboards:} Transparency for community and vendors
+    \item \textbf{Cost Tracking:} Attribution per vendor and workload type
+    \item \textbf{Performance Metrics:} Build times, success rates, SLA compliance
+    \item \textbf{Audit Logging:} Comprehensive logging for all runner activity
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item System must remain manageable as it grows
+  \item Standardization is key to scalability
+  \item Automation reduces maintenance burden
+  \item Centralized monitoring provides visibility
+  \item Public dashboards build trust with community
+  \item Track performance: build times, success rates
+  \item Understand true costs of each platform
+  \item Hold vendors accountable to SLAs
+  \item Comprehensive logging for accountability
+  \item Self-service reduces bottlenecks
+}
+
 % SECTION 4: TECHNICAL ARCHITECTURE
 \section[Technical Architecture]{Technical Architecture}
 
 \begin{sectionwithpiclargecentral}[nadi-whatisdelirium-fZ8uf_L52wg-unsplash.jpg]{Photo by \href{https://unsplash.com/@whatisdelirium}{\underline{Nadi Whatisdelirium}}, CC0}{1}
 \end{sectionwithpiclargecentral}
+
+\begin{grayframe}
+  \frametitle{Public Cloud Infrastructure}
+  \textbf{Current AWS Setup:}
+  \begin{itemize}
+    \item Primary infrastructure hosted on AWS
+    \item Self-hosted GitHub Actions runners
+    \item Managed by PyTorch CI/CD team
+    \item Autoscaling based on workload demand
+  \end{itemize}
+  ~\\
+  \textbf{Multi-Cloud Working Group Initiatives:}
+  \begin{itemize}
+    \item \textbf{Portable CI Jobs:} Standardizing workflow definitions for cloud-agnostic execution
+    \item \textbf{Reusable Autoscaler:} Developing cloud-agnostic autoscaling solution
+    \item \textbf{Infrastructure as Code:} Terraform modules for consistent deployment
+    \item \textbf{Collaboration with Infra Team:} Joint development and testing
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item AWS is the foundation, but not the only option
+  \item Multi-cloud WG working to make system portable
+  \item Autoscaler being generalized for other clouds
+  \item CI jobs being standardized to run anywhere
+  \item IaC approach enables reproducibility
+  \item Close collaboration between WG and infra team
+  \item Goal: reduce vendor lock-in while maintaining stability
+}
+
+\begin{grayframe}
+  \frametitle{Vendor-Managed GitHub Runners}
+  \textbf{GitHub Actions Runner Token Service (GHARTS):}
+  \begin{itemize}
+    \item Secure token distribution for self-hosted runners
+    \item Centralized authentication and authorization
+    \item Automated runner registration and lifecycle management
+    \item Audit logging for all runner operations
+  \end{itemize}
+  ~\\
+  \textbf{Benefits:}
+  \begin{itemize}
+    \item \textbf{Security:} No long-lived tokens, centralized access control
+    \item \textbf{Scalability:} Automated runner provisioning and deprovisioning
+    \item \textbf{Visibility:} Centralized monitoring and metrics collection
+    \item \textbf{Vendor Integration:} Standardized interface for all vendors
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item GHARTS solves key security and scalability challenges
+  \item Traditional approach uses long-lived tokens (security risk)
+  \item GHARTS provides short-lived tokens with proper scoping
+  \item Centralized control while vendors manage infrastructure
+  \item Automated lifecycle reduces manual overhead
+  \item All runner activity logged for audit
+  \item Standard interface makes vendor onboarding easier
+  \item Enables trust but verify model
+}
+
+\begin{grayframe}
+  \frametitle{GHARTS Architecture}
+  \textbf{Components:}
+  \begin{itemize}
+    \item \textbf{Token Service:} Issues short-lived runner registration tokens
+    \item \textbf{Runner Manager:} Handles runner lifecycle and health checks
+    \item \textbf{Metrics Collector:} Aggregates performance and usage data
+    \item \textbf{Policy Engine:} Enforces security and access policies
+  \end{itemize}
+  ~\\
+  \textbf{Workflow:}
+  \begin{itemize}
+    \item Vendor requests token from GHARTS
+    \item GHARTS validates vendor credentials and policies
+    \item Short-lived token issued for runner registration
+    \item Runner registers with GitHub using token
+    \item GHARTS monitors runner health and collects metrics
+    \item Token expires, runner deregisters automatically
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item GHARTS is the central control plane
+  \item Token service is the security foundation
+  \item Short-lived tokens (minutes to hours, not days/months)
+  \item Policy engine enforces who can run what workloads
+  \item Metrics collector provides visibility
+  \item Automated lifecycle reduces operational burden
+  \item Vendors can't bypass security controls
+  \item System scales to many vendors and runners
+}
+
+\begin{grayframe}
+  \frametitle{Vendor-Managed Test Systems}
+  \textbf{Accelerator Integration Process:}
+  \begin{itemize}
+    \item Developed by Accelerator Integration Working Group
+    \item Loosely coupled with GitHub Actions
+    \item Vendors provide test infrastructure and environments
+    \item CI triggers tests via webhooks or API calls
+    \item Results reported back to GitHub
+  \end{itemize}
+  ~\\
+  \textbf{Use Cases:}
+  \begin{itemize}
+    \item Specialized hardware testing (TPUs, custom accelerators)
+    \item Long-running performance benchmarks
+    \item Platform-specific integration tests
+    \item Vendor-specific optimization validation
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Different model from GitHub runners
+  \item Looser coupling gives vendors more flexibility
+  \item Good for specialized hardware not suitable for runners
+  \item Vendors control their test environment completely
+  \item CI orchestrates but doesn't execute directly
+  \item Results still integrated into PR workflow
+  \item Lower barrier to entry for some vendors
+  \item Accelerator Integration WG created this process
+}
+
+\begin{grayframe}
+  \frametitle{Test System Visibility}
+  \textbf{Challenges:}
+  \begin{itemize}
+    \item Loosely coupled systems harder to monitor
+    \item Results come from external systems
+    \item Need consistent reporting format
+    \item Debugging failures more complex
+  \end{itemize}
+  ~\\
+  \textbf{Ongoing Work:}
+  \begin{itemize}
+    \item \textbf{Standardized Result Format:} Common schema for test results
+    \item \textbf{Centralized Dashboard:} Unified view of all test systems
+    \item \textbf{Event Relay:} Real-time test status updates
+    \item \textbf{Metrics Collection:} Performance and reliability tracking
+    \item \textbf{Debugging Tools:} Log aggregation and analysis
+  \end{itemize}
+\end{grayframe}
+\note[itemize]{
+  \item Visibility is the main challenge with loose coupling
+  \item Hard to see what's happening in vendor systems
+  \item Working on standardized reporting
+  \item Event relay provides real-time updates
+  \item Dashboard gives unified view across all vendors
+  \item Metrics help track reliability and performance
+  \item Debugging tools help when things go wrong
+  \item Goal: maintain flexibility while improving visibility
+  \item Balance between vendor autonomy and project needs
+}
 
 \begin{grayframe}
   \frametitle{Vendor Contribution Models}
