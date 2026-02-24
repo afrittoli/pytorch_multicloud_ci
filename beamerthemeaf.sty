@@ -109,7 +109,7 @@
   \setbeamertemplate{background}{
   		\begin{tikzpicture}
   			\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
-  			\fill[color=white] (0.5\paperwidth, 0) rectangle (\the\paperwidth, \the\paperheight);
+  			\fill[color=white] (0.55\paperwidth, 0) rectangle (\the\paperwidth, \the\paperheight);
   		\end{tikzpicture}
   	}
   \begin{frame}[t]
@@ -117,6 +117,40 @@
 {
   \end{frame}
 }
+\newenvironment{lwhiterblackframe}
+{
+  \setbeamercolor{background canvas}{bg=myblack}
+  \setbeamercolor*{frametitle}{fg=myblack}
+  \settextcolour{white}
+  \setbeamertemplate{background}{
+  		\begin{tikzpicture}
+  			\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+  			\fill[color=white] (0, 0) rectangle (0.45\paperwidth, \the\paperheight);
+  		\end{tikzpicture}
+  	}
+  \begin{frame}[t]
+}
+{
+  \end{frame}
+}
+
+\newenvironment{whitetoptealframe}
+{
+  \setbeamercolor{background canvas}{bg=white}
+  \setbeamercolor*{frametitle}{fg=myblack}
+  \settextcolour{myblack}
+  \setbeamertemplate{background}{
+  		\begin{tikzpicture}
+  			\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+  			\fill[color=mylightgray] (0, 0) rectangle (\the\paperwidth, 0.4\paperheight);
+  		\end{tikzpicture}
+  	}
+  \begin{frame}[t]
+}
+{
+  \end{frame}
+}
+
 
 \newenvironment{2columnsframe}[3]
 {

@@ -23,7 +23,7 @@
 
 
 \title{Collaborative Infrastructure at Scale: PyTorch's Multi-Cloud CI Model}
-\date[25 Feb 2026]{25 Feb 2026 | \faTwitter ~@blackchip76 | \faGithub ~afrittoli}
+\date[25 Feb 2026]{25 Feb 2026 | \textbf{X} ~@blackchip76 | \faGithub ~afrittoli}
 \author[Andrea Frittoli]{%
   Andrea Frittoli \\
   Developer Advocate \\
@@ -59,7 +59,7 @@
 
 \begin{speakerframe}[af_wind.jpg]{Andrea Frittoli}%
   {%
-  \faGithub ~afrittoli | \faLinkedin ~andreafrittoli | \faTwitter ~@blackchip76
+  \faGithub ~afrittoli | \faLinkedin ~andreafrittoli | \textbf{X} ~@blackchip76
   }%
   {%
   \begin{itemize}
@@ -85,7 +85,7 @@
 % SECTION 1: PYTORCH & THE CHALLENGE
 \section[The Infrastructure Challenge]{The Infrastructure Challenge}
 
-\begin{sectionwithpiclargecentral}[denys-nevozhai-Zeu57mprpaI-unsplash.jpg]{Photo by \href{https://unsplash.com/@dnevozhai}{\underline{Denys Nevozhai}}, CC0}{1}
+\begin{sectionwithpiclargecentral}[universal_upscale_0_42586ee4-8ead-4a8f-98bd-fe9c040f6591_0.jpg]{leonardo.ai, CC0}{1}
 \end{sectionwithpiclargecentral}
 
 \begin{grayframe}
@@ -472,33 +472,31 @@
   \item Technical details will be covered in architecture section
 }
 
-\begin{lgrayrwhiteframe}
+\begin{lblackrwhiteframe}
   \frametitle{Roles \& Requirements}
+  \vspace{3em}
   \begin{columns}[c]
-    \column{0.45\textwidth}
-    \small
-    Least privilege access to cloud resources:
+    \column{0.55\textwidth}
+    \textbf{Least privilege access to cloud resources:}
     \begin{itemize}
-      \item CI/CD Jobs specify nodes access level required
-      \item CI/CD Runners are assigned a role
+      \item Jobs specify nodes access level required
+      \item Runners are assigned a role
       \item Roles define the level of access to resources
-      \item Roles identified: tester, builder, publisher, releaser
     \end{itemize}
     \vspace{0.5em}
-    Requirements for Runners:
+    \textbf{Requirements for Runners:}
     \begin{itemize}
       \item Configuration
       \item Provisioning
       \item Monitoring
       \item Security
-      \item All PRs
     \end{itemize}
-    
-    \column{0.50\textwidth}
+
+    \column{0.45\textwidth}
     \centering
-    \includegraphics[width=\textwidth,height=0.7\paperheight,keepaspectratio]{img/requirements-per-role.png}
+    \raisebox{-0.5\height}{\includegraphics[width=1.1\textwidth,height=0.6\paperheight,keepaspectratio]{img/pytorch-multi-cloud-infra-Roles.png}}
   \end{columns}
-\end{lgrayrwhiteframe}
+\end{lblackrwhiteframe}
 \note[itemize]{
   \item Different roles have different requirements
   \item Testers can tolerate some downtime, releasers cannot
@@ -509,14 +507,15 @@
   \item Clear requirements enable better planning
 }
 
-\begin{grayframe}
+\begin{lwhiterblackframe}
   \frametitle{Triggers \& SLOs}
-  \begin{columns}[T]
-    \column{0.50\textwidth}
+  \begin{columns}[c]
+    \column{0.45\textwidth}
     \centering
-    \includegraphics[width=\textwidth,keepaspectratio]{img/diagrams-SLOs.png}
+    \includegraphics[width=1.1\textwidth,height=0.6\paperheight,keepaspectratio]{img/diagrams-SLOs.png}
     
-    \column{0.48\textwidth}
+    \column{0.55\textwidth}
+    \small
     Trigger levels for CI/CD jobs:
     \begin{itemize}
       \item On-demand only
@@ -534,7 +533,7 @@
       \item Engineering Commitment (on-call, slack, meetings)
     \end{itemize}
   \end{columns}
-\end{grayframe}
+\end{lwhiterblackframe}
 \note[itemize]{
   \item Different roles have different requirements
   \item Testers can tolerate some downtime, releasers cannot
@@ -545,23 +544,30 @@
   \item Clear requirements enable better planning
 }
 
-\begin{grayframe}
+\begin{whitetoptealframe}
   \frametitle{Contribution Process}
-  \begin{columns}[T]
-    \column{0.50\textwidth}
-    \centering
-    \includegraphics[width=\textwidth,keepaspectratio]{img/diagrams-Process.png}
-    
+  \vspace{0.5em}
+  \centering
+  \includegraphics[width=0.65\textwidth,keepaspectratio]{img/diagrams-Process.png}
+  
+  \vspace{-0.5em}
+  \begin{columns}[t]
     \column{0.48\textwidth}
+    \small
     \begin{itemize}
       \item Working Group provides guidance and recommendations
       \item Infra team verify checks for compliance
       \item TAC Community for final approval
-      \item Monitoring for SLOs
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \small
+    \begin{itemize}
       \item Transparent process with clear requirements
+      \item Monitoring for SLOs
     \end{itemize}
   \end{columns}
-\end{grayframe}
+\end{whitetoptealframe}
 \note[itemize]{
   \item Clear process reduces friction
   \item Not just "plug and play" - vendors must meet standards
@@ -581,28 +587,33 @@
 
 \begin{grayframe}
   \frametitle{Central Administration \& Visibility}
-  \begin{columns}[T]
+  \begin{columns}[c]
     \column{0.48\textwidth}
-    \textbf{Maintaining Manageability at Scale:}
+    {\footnotesize
+    Maintaining Manageability at Scale:
     \begin{itemize}
       \item Common software stack across clouds\\Reusable by vendors too
-      \item Vendor playbooks, reusable IaaC
       \item Self-service Tools with Central Admin Override
+      \item Vendor playbooks, reusable IaaC
     \end{itemize}
     ~\\
-    \textbf{Visibility \& Control:}
+    Visibility \& Control:
     \begin{itemize}
-      \item \textbf{Public Dashboards:} Transparency for community and vendors
-      \item \textbf{Cost Tracking:} Attribution per vendor and workload type
-      \item \textbf{Performance Metrics:} Build times, success rates, SLA compliance
+      \item Public Dashboards: Transparency for community and vendors
+      \item Cost Tracking: Attribution per vendor and workload type
+      \item Performance Metrics: Build times, success rates, SLA compliance
     \end{itemize}
+    }
     
     \column{0.50\textwidth}
     \centering
-    \includegraphics[width=\textwidth,keepaspectratio]{img/hub.png}
-    \vspace{0.3em}
+    \includegraphics[width=0.98\textwidth,height=0.25\paperheight,keepaspectratio]{img/hud.png}
+    \vspace{0.4em}
     
-    \includegraphics[width=\textwidth,keepaspectratio]{img/hub-api.png}
+    \includegraphics[width=0.98\textwidth,height=0.25\paperheight,keepaspectratio]{img/gharts1.png}
+    \vspace{0.4em}
+    
+    \includegraphics[width=0.98\textwidth,height=0.25\paperheight,keepaspectratio]{img/gharts3.png}
   \end{columns}
 \end{grayframe}
 \note[itemize]{
@@ -952,7 +963,7 @@
   \begin{itemize}
     \item Andrea Frittoli
     \item andrea.frittoli@uk.ibm.com
-    \item \faTwitter ~@blackchip76 | \faGithub ~afrittoli
+    \item \textbf{X} ~@blackchip76 | \faGithub ~afrittoli
   \end{itemize}
 \end{blackframe}
 \note[itemize]{
