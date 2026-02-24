@@ -16,6 +16,7 @@
 \usetikzlibrary{external}
 \tikzexternalize[prefix=tikz-cache/]
 \usepackage{color}
+\usepackage{colortbl}
 \usepackage{fontawesome5}
 % \usepackage{svg}
 \usepackage{transparent}
@@ -440,25 +441,26 @@
     \item \textbf{Vendor-Managed Runner Pools:} Tightly integrated with GitHub Actions
     \item \textbf{Vendor-Managed Test Infrastructure:} Loosely integrated with GitHub
   \end{itemize}
-  ~\\
-  \textbf{Addressing the Challenges:}
-  % TODO
-  % This should be a 3x2 table, columns are the three challenge dimensions
-  % rows are advantages and challenges
-  % Having multiple integration models solves some issues but creates complexity
-  % at the same time, which should go in the notes
-  % For the table content:
-  % Community advantages: Flexible models accommodate different vendor capabilities
-  % Community challenges: Hide the underlying infra complexity to contributors
-  % Scale advantages: Outsourcing engineering with vendor-managed setups
-  % Scale challenges: Consistent tech stack required for public cloud credits. Consistent metrics and monitoring across the board.
-  % Security advantages: More loosely coupled systems cannot compromise core CI system
-  % Security challenges: Ensure security best practices on vendor managed infrastructure
-  \begin{itemize}
-    \item \textbf{Community:} Flexible models accommodate different vendor capabilities
-    \item \textbf{Scale:} Distributed compute resources and engineering effort
-    \item \textbf{Security:} Standardized security requirements across all models
-  \end{itemize}
+  \vspace{0.5em}
+  \centering
+  \scriptsize
+  \renewcommand{\arraystretch}{1.3}
+  \setlength{\arrayrulewidth}{0.4pt}
+  \begin{tabular}{l@{\hspace{0.5em}}>{\raggedright\arraybackslash}p{0.24\textwidth}|>{\raggedright\arraybackslash}p{0.24\textwidth}|>{\raggedright\arraybackslash}p{0.24\textwidth}}
+    & \multicolumn{1}{>{\raggedright\arraybackslash}p{0.24\textwidth}}{\scriptsize\textbf{\textcolor{custom1}{Community}}} & \multicolumn{1}{>{\raggedright\arraybackslash}p{0.24\textwidth}}{\scriptsize\textbf{\textcolor{custom1}{Scale}}} & \multicolumn{1}{>{\raggedright\arraybackslash}p{0.24\textwidth}}{\scriptsize\textbf{\textcolor{custom1}{Security}}} \\
+    \noalign{\hrule height 0.4pt}
+    \multicolumn{1}{|l@{\hspace{0.5em}}}{\scriptsize\textbf{\textcolor{custom1}{Advantages}}} &
+    \multicolumn{1}{|>{\raggedright\arraybackslash}p{0.24\textwidth}|}{\cellcolor{custom1!15}\scriptsize Flexible models accommodate different vendor capabilities} &
+    \cellcolor{custom1!15}\scriptsize Outsourcing engineering with vendor-managed setups &
+    \multicolumn{1}{>{\raggedright\arraybackslash}p{0.24\textwidth}|}{\cellcolor{custom1!15}\scriptsize More loosely coupled systems cannot compromise core CI system} \\
+    \noalign{\hrule height 0.4pt}
+    \multicolumn{1}{|l@{\hspace{0.5em}}}{\scriptsize\textbf{\textcolor{custom1}{Challenges}}} &
+    \multicolumn{1}{|>{\raggedright\arraybackslash}p{0.24\textwidth}|}{\cellcolor{custom1!15}\scriptsize Hide the underlying infra complexity to contributors} &
+    \cellcolor{custom1!15}\scriptsize Consistent tech stack required for public cloud credits. Consistent metrics and monitoring across the board. &
+    \multicolumn{1}{>{\raggedright\arraybackslash}p{0.24\textwidth}|}{\cellcolor{custom1!15}\scriptsize Ensure security best practices on vendor managed infrastructure} \\
+    \noalign{\hrule height 0.4pt}
+  \end{tabular}
+  \renewcommand{\arraystretch}{1}
 \end{grayframe}
 \note[itemize]{
   \item Three main contribution types
