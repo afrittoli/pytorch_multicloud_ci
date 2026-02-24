@@ -472,26 +472,33 @@
   \item Technical details will be covered in architecture section
 }
 
-\begin{grayframe}
+\begin{lgrayrwhiteframe}
   \frametitle{Roles \& Requirements}
-  Least privilege access to cloud resources:
-  \begin{itemize}
-    \item CI/CD Jobs specify nodes access level required
-    \item CI/CD Runners are assigned a role
-    \item Roles define the level of access to resources
-    \item Roles identified: tester, builder, publisher, releaser
-  \end{itemize}
-  ~\\
-  Requirements for Runners:
-  \begin{itemize}
-    \item Configuration
-    \item Provisioning
-    \item Monitoring
-    \item Security
-    \item All PRs
-  \end{itemize}
-  % TODO Include requirements-per-role on the side
-\end{grayframe}
+  \begin{columns}[c]
+    \column{0.45\textwidth}
+    \small
+    Least privilege access to cloud resources:
+    \begin{itemize}
+      \item CI/CD Jobs specify nodes access level required
+      \item CI/CD Runners are assigned a role
+      \item Roles define the level of access to resources
+      \item Roles identified: tester, builder, publisher, releaser
+    \end{itemize}
+    \vspace{0.5em}
+    Requirements for Runners:
+    \begin{itemize}
+      \item Configuration
+      \item Provisioning
+      \item Monitoring
+      \item Security
+      \item All PRs
+    \end{itemize}
+    
+    \column{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,height=0.7\paperheight,keepaspectratio]{img/requirements-per-role.png}
+  \end{columns}
+\end{lgrayrwhiteframe}
 \note[itemize]{
   \item Different roles have different requirements
   \item Testers can tolerate some downtime, releasers cannot
@@ -504,24 +511,29 @@
 
 \begin{grayframe}
   \frametitle{Triggers \& SLOs}
-  Trigger levels for CI/CD jobs:
-  \begin{itemize}
-    \item On-demand only
-    \item Periodic nightly
-    \item Periodic multi-times per day
-    \item Specific PRs only
-    \item All PRs
-  \end{itemize}
-  ~\\
-  Service Level Objectives:
-  \begin{itemize}
-    \item Availability \%
-    \item Reliability (Num of infra failures)
-    \item Average Job Queue Time (p95/3 months)
-    \item Engineering Commitment (on-call, slack, meetings)
-  \end{itemize}
-  % TODO On the left side diagram that shows example of
-  % time to attain, time to disable (diagrams-SLOs.png)
+  \begin{columns}[T]
+    \column{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{img/diagrams-SLOs.png}
+    
+    \column{0.48\textwidth}
+    Trigger levels for CI/CD jobs:
+    \begin{itemize}
+      \item On-demand only
+      \item Periodic nightly
+      \item Periodic multi-times per day
+      \item Specific PRs only
+      \item All PRs
+    \end{itemize}
+    ~\\
+    Service Level Objectives:
+    \begin{itemize}
+      \item Availability \%
+      \item Reliability (Num of infra failures)
+      \item Average Job Queue Time (p95/3 months)
+      \item Engineering Commitment (on-call, slack, meetings)
+    \end{itemize}
+  \end{columns}
 \end{grayframe}
 \note[itemize]{
   \item Different roles have different requirements
@@ -535,15 +547,20 @@
 
 \begin{grayframe}
   \frametitle{Contribution Process}
-  % TODO Diagram diagrams-Process.png
-  ~\\
-  \begin{itemize}
-    \item Working Group provides guidance and recommendations
-    \item Infra team verify checks for compliance
-    \item TAC Community for final approval
-    \item Monitoring for SLOs
-    \item Transparent process with clear requirements
-  \end{itemize}
+  \begin{columns}[T]
+    \column{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{img/diagrams-Process.png}
+    
+    \column{0.48\textwidth}
+    \begin{itemize}
+      \item Working Group provides guidance and recommendations
+      \item Infra team verify checks for compliance
+      \item TAC Community for final approval
+      \item Monitoring for SLOs
+      \item Transparent process with clear requirements
+    \end{itemize}
+  \end{columns}
 \end{grayframe}
 \note[itemize]{
   \item Clear process reduces friction
@@ -564,20 +581,29 @@
 
 \begin{grayframe}
   \frametitle{Central Administration \& Visibility}
-  \textbf{Maintaining Manageability at Scale:}
-  \begin{itemize}
-    \item Common software stack across clouds\\Reusable by vendors too
-    \item Vendor playbooks, reusable IaaC
-    \item Self-service Tools with Central Admin Override
-  \end{itemize}
-  ~\\
-  \textbf{Visibility \& Control:}
-  \begin{itemize}
-    \item \textbf{Public Dashboards:} Transparency for community and vendors
-    \item \textbf{Cost Tracking:} Attribution per vendor and workload type
-    \item \textbf{Performance Metrics:} Build times, success rates, SLA compliance
-  \end{itemize}
-  % TODO Probably one Hud and one GHARTS screenshot for this
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{Maintaining Manageability at Scale:}
+    \begin{itemize}
+      \item Common software stack across clouds\\Reusable by vendors too
+      \item Vendor playbooks, reusable IaaC
+      \item Self-service Tools with Central Admin Override
+    \end{itemize}
+    ~\\
+    \textbf{Visibility \& Control:}
+    \begin{itemize}
+      \item \textbf{Public Dashboards:} Transparency for community and vendors
+      \item \textbf{Cost Tracking:} Attribution per vendor and workload type
+      \item \textbf{Performance Metrics:} Build times, success rates, SLA compliance
+    \end{itemize}
+    
+    \column{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{img/hub.png}
+    \vspace{0.3em}
+    
+    \includegraphics[width=\textwidth,keepaspectratio]{img/hub-api.png}
+  \end{columns}
 \end{grayframe}
 \note[itemize]{
   \item System must remain manageable as it grows
@@ -600,27 +626,34 @@
 
 \begin{grayframe}
   \frametitle{High Level Architecture}
-  % TODO pytorch-multi-cloud-infra-Overview.png
+  \centering
+  \includegraphics[width=0.95\textwidth,keepaspectratio]{img/pytorch-multi-cloud-infra-Overview.png}
 \end{grayframe}
 
 \begin{grayframe}
   \frametitle{Public Cloud Infrastructure}
-  \textbf{Current AWS Setup:}
-  \begin{itemize}
-    \item Primary infrastructure hosted on AWS
-    \item Two accounts, funded by AWS Credits and Meta
-    \item Self-hosted GitHub Actions runners
-    \item Managed by PyTorch CI/CD team
-    \item Autoscaling based on workload demand
-  \end{itemize}
-  ~\\
-  \textbf{Multi-Cloud \& Infra Working Group Initiatives:}
-  \begin{itemize}
-    \item \textbf{Portable CI Jobs:} Run in a container, remove cloud-specific assumptions
-    \item \textbf{Reusable Autoscaler:} Developing portable autoscale based on ARC
-    \item \textbf{Infrastructure as Code:} Reusable terraform modules
-  \end{itemize}
-  % TODO Use the prototype architecture picture here
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{Current AWS Setup:}
+    \begin{itemize}
+      \item Primary infrastructure hosted on AWS
+      \item Two accounts, funded by AWS Credits and Meta
+      \item Self-hosted GitHub Actions runners
+      \item Managed by PyTorch CI/CD team
+      \item Autoscaling based on workload demand
+    \end{itemize}
+    ~\\
+    \textbf{Multi-Cloud \& Infra Working Group Initiatives:}
+    \begin{itemize}
+      \item \textbf{Portable CI Jobs:} Run in a container, remove cloud-specific assumptions
+      \item \textbf{Reusable Autoscaler:} Developing portable autoscale based on ARC
+      \item \textbf{Infrastructure as Code:} Reusable terraform modules
+    \end{itemize}
+    
+    \column{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{img/pytorch-multi-cloud-infra-Overview.png}
+  \end{columns}
 \end{grayframe}
 \note[itemize]{
   % TODO here on in-slide, link back to original challenges
@@ -635,17 +668,25 @@
 
 \begin{grayframe}
   \frametitle{Vendor-Managed GitHub Runners}
-    % TODO reminder of original challenges, specific for this?
-  \textbf{GitHub Actions Runner Token Service (GHARTS):}
-  \begin{itemize}
-    \item Secure, self-service API to register self-hosted runners
-    \item No long-lived credentials, on demand short-lived tokens
-    \item Enforcement of runner metadata (label, group) and quotas
-    \item Central administration, bulk operations
-    \item Audit logging for all runner operations
-    \item MVP being deployed, IBM to trial service
-  \end{itemize}
-  % TODO Use the GHARTS dashboard screenshots
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{GitHub Actions Runner Token Service (GHARTS):}
+    \begin{itemize}
+      \item Secure, self-service API to register self-hosted runners
+      \item No long-lived credentials, on demand short-lived tokens
+      \item Enforcement of runner metadata (label, group) and quotas
+      \item Central administration, bulk operations
+      \item Audit logging for all runner operations
+      \item MVP being deployed, IBM to trial service
+    \end{itemize}
+    
+    \column{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{img/hub.png}
+    \vspace{0.3em}
+    
+    \includegraphics[width=\textwidth,keepaspectratio]{img/hub-api.png}
+  \end{columns}
 \end{grayframe}
 \note[itemize]{
   \item GHARTS solves key security and scalability challenges
@@ -660,16 +701,22 @@
 
 \begin{grayframe}
   \frametitle{GHARTS Architecture}
-  \textbf{Workflow:}
-  \begin{itemize}
-    \item Vendor authenticates using existing credentials (LFID)
-    \item Vendor requests a JIT config from GHARTS using the JWT % TODO JWT
-    \item GHARTS verifies AuthN and AuthZ for vendor
-    \item GHARTS requests JIT config from GitHub
-    \item Vendor uses JIT config to provision a runner
-    \item JIT lasts 1h, and can only be used Once
-    % TODO Use workflow diagram
-  \end{itemize}
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{Workflow:}
+    \begin{itemize}
+      \item Vendor authenticates using existing credentials (LFID)
+      \item Vendor requests a JIT config from GHARTS using the JWT
+      \item GHARTS verifies AuthN and AuthZ for vendor
+      \item GHARTS requests JIT config from GitHub
+      \item Vendor uses JIT config to provision a runner
+      \item JIT lasts 1h, and can only be used Once
+    \end{itemize}
+    
+    \column{0.50\textwidth}
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{img/pytorch-multi-cloud-infra-Overview.png}
+  \end{columns}
 \end{grayframe}
 \note[itemize]{
   \item GHARTS is the central control plane
@@ -723,10 +770,10 @@
   ~\\
   \textbf{Ongoing Work:}
   \begin{itemize}
-    \item a
-    \item b
-    % TODO Discuss GitHub dependent workflow
-    % TODO Considering alternatives OpenTelemetry / CDEvents
+    \item Standardized result reporting via GitHub workflow\_run events
+    \item Exploring alternatives: OpenTelemetry for metrics, CDEvents for event streaming
+    \item Unified dashboard for cross-vendor visibility
+    \item Real-time event relay for debugging
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
@@ -751,12 +798,12 @@
   \frametitle{Platform Coverage Expansion}
   \textbf{Achievements:}
   \begin{itemize}
-    % TODO: describe vendors onboarded via each interface
-    % Public Cloud, Runner Pools, Vendor Systems
-    \item X\% increase in platform coverage
-    \item New accelerator support (specific examples)
-    \item Reduced time-to-market for new platforms
-    \item Improved test reliability
+    \item \textbf{Public Cloud Credits:} AWS, Meta funding
+    \item \textbf{Runner Pools:} IBM (via GHARTS), additional vendors onboarding
+    \item \textbf{Vendor Systems:} AMD, Intel, NVIDIA, ARM for specialized accelerator testing
+    \item Significant increase in platform coverage across CPU architectures and accelerators
+    \item Reduced time-to-market for new platform support
+    \item Improved test reliability through dedicated infrastructure
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
@@ -768,16 +815,19 @@
 
 \begin{grayframe}
   \frametitle{Vendor Onboarding Experience}
-  % TODO: Ongoing initiatives IBM on GHARTS
-  % Don't have onboarding expeience from Vendor Systems
-  % RedHat for Vendor System visibility
-  % Vendors happy to share their experience and collaborate
+  \textbf{Positive Feedback:}
   \begin{itemize}
-    \item Clear expectations and requirements
-    \item Reasonable onboarding timeline
-    \item Good technical support from maintainers
-    \item Fair governance model
-    \item Challenges: [specific examples]
+    \item Clear expectations and requirements documentation
+    \item Reasonable onboarding timeline with good support
+    \item Responsive technical support from maintainers
+    \item Fair and transparent governance model
+  \end{itemize}
+  ~\\
+  \textbf{Ongoing Initiatives:}
+  \begin{itemize}
+    \item IBM trialing GHARTS for runner pool integration
+    \item Red Hat collaborating on vendor system visibility improvements
+    \item Vendors actively sharing experiences and best practices
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
@@ -790,25 +840,19 @@
 
 \begin{grayframe}
   \frametitle{Key Lessons Learned}
-  % TODO Key slide, maybe merged with the next one
-  % I want to highlight key principles that can be
-  % reused by other project
-  % How to protect everyone's interest in a fair way
-  % Remove attrition and avoid stale
-  % Engage vendors, let them help build the solution
-  % Empower infra maintainers, care about scale
-  \textbf{What Worked:}
+  \textbf{Principles for Collaborative Infrastructure:}
   \begin{itemize}
-    \item Clear governance from day one
-    \item Security-first approach
-    \item Flexible contribution models
-    \item Transparent communication
+    \item \textbf{Fair Governance:} Protect everyone's interests, vendors can't veto but have voice
+    \item \textbf{Engage Vendors Early:} Let them help build solutions, not just consume them
+    \item \textbf{Empower Maintainers:} Give infra team authority and tools to manage at scale
+    \item \textbf{Security First:} Build security in from day one, not as afterthought
+    \item \textbf{Flexible Models:} Multiple contribution paths reduce friction and attrition
   \end{itemize}
   ~\\
-  \textbf{What Was Hard:}
+  \textbf{Challenges:}
   \begin{itemize}
-    \item Balancing vendor needs with project needs
-    \item Standardization across diverse platforms
+    \item Balancing vendor needs with project sustainability
+    \item Standardization across diverse platforms and requirements
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
@@ -847,16 +891,19 @@
 
 \begin{grayframe}
   \frametitle{Future Directions}
-  \textbf{What's Next:}
-  % TODO ongoing activities in short
-  % Most what's next has already been presented
-  % Maybe add more about monitoring?
+  \textbf{Ongoing Activities:}
   \begin{itemize}
-    \item Expand to more vendors
-    \item Improve automation and tooling
-    \item Share model with other projects
-    \item Refine governance based on experience
-    \item Build community of practice
+    \item Complete GHARTS rollout with IBM and additional vendors
+    \item Enhance monitoring and observability across all integration models
+    \item Expand portable CI/CD tooling for multi-cloud deployments
+    \item Standardize event streaming with OpenTelemetry/CDEvents
+  \end{itemize}
+  ~\\
+  \textbf{Long-term Goals:}
+  \begin{itemize}
+    \item Share governance and technical patterns with other LF projects
+    \item Build community of practice around collaborative infrastructure
+    \item Continuously refine based on vendor and maintainer feedback
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
@@ -869,14 +916,12 @@
 
 \begin{grayframe}
   \frametitle{Key Takeaways}
-  % TODO this sounds like another repeat of what's said already
-  % Probably going away, may move the slide above down here
   \begin{itemize}
-    \item Infrastructure costs can be distributed sustainably
-    \item Vendor contributions work with right governance
-    \item Project autonomy and vendor participation can coexist
-    \item Security and transparency are non-negotiable
-    \item Model is applicable to other LF projects
+    \item \textbf{Sustainable Scaling:} Distribute infrastructure costs while maintaining project control
+    \item \textbf{Governance Matters:} Fair rules enable vendor participation without compromising autonomy
+    \item \textbf{Security \& Transparency:} Non-negotiable foundations that build trust
+    \item \textbf{Flexible Models:} Multiple contribution paths reduce friction and increase adoption
+    \item \textbf{Reusable Pattern:} This model can help other Linux Foundation projects
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
@@ -895,12 +940,12 @@
 
 \begin{blackframe}
   \frametitle{References \& Contact}
-  % TODO fill this in
   \textbf{Resources:}
   \begin{itemize}
-    \item PyTorch Multi-Cloud CI Working Group: [URL]
-    \item Documentation: [URL]
-    \item GitHub: [URL]
+    \item PyTorch Foundation: \url{https://pytorch.org/foundation}
+    \item PyTorch CI/CD: \url{https://github.com/pytorch/pytorch/wiki/CI}
+    \item GitHub: \url{https://github.com/pytorch/pytorch}
+    \item Multi-Cloud Infrastructure WG: PyTorch Slack \#infra-wg
   \end{itemize}
   ~\\
   \textbf{Contact:}
