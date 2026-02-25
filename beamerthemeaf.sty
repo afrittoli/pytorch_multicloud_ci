@@ -607,6 +607,30 @@
   \end{frame}
 }
 
+\newenvironment{textondarkpicshaded}[2][]
+{
+  \setbeamercolor*{frametitle}{fg=white}
+  \settextcolour{white}
+  \setbeamertemplate{background}{
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+      \node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[height=\paperheight]{img/#1}};
+      \fill[myblack,opacity=0.75] (0,0) rectangle (\the\paperwidth,\the\paperheight);
+    \end{tikzpicture}
+  }
+  \setwhitelogofootline{notext}
+  \begin{frame}
+    \begin{textblock*}{0.4\paperwidth}(0.005\paperwidth,0.97\paperheight)
+      \begin{beamercolorbox}[wd=0.4\paperwidth]{photolicense}
+        \usebeamerfont{photolicense}#2%
+      \end{beamercolorbox}%
+      \vfill
+    \end{textblock*}
+}
+{
+  \end{frame}
+}
+
 % #1 Speaker Pic
 % #2 Speaker name
 % #3 Speaker name subtitle - e.g. social

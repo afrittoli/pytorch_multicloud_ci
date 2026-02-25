@@ -766,7 +766,6 @@
     \textbf{Use Cases:}
     \begin{itemize}
       \item Specialized hardware testing (TPUs, custom accelerators)
-      \item Produce test results only
     \end{itemize}
 
     \column{0.45\textwidth}
@@ -785,24 +784,25 @@
   \item Accelerator Integration WG created this process
 }
 
-\begin{grayframe}
-  \frametitle{Test System Visibility}
-  \textbf{Challenges:}
+\begin{textondarkpicshaded}[hud-2-dark.png]{}
+  \frametitle{Old Issues, New Issues}
+  \vspace{2em}
+  \textbf{New Challenges:}
   \begin{itemize}
-    \item Loosely coupled systems harder to monitor
-    \item Results come from external systems
-    \item Need consistent reporting format
-    \item Debugging failures more complex
+    \item Multiple routes to Integration
+    \item Address several challenges, but
+    \item Creates extra complexity
+    \item Impedes visibility across the board
   \end{itemize}
   ~\\
-  \textbf{Ongoing Work:}
+  \textbf{Ongoing Work to Solve:}
   \begin{itemize}
-    \item Standardized result reporting via GitHub workflow\_run events
-    \item Exploring alternatives: OpenTelemetry for metrics, CDEvents for event streaming
-    \item Unified dashboard for cross-vendor visibility
-    \item Real-time event relay for debugging
+    \item Collaboration across working groups
+    \item Same visibility of test results for all routes
+    \item Consistent metrics
+    \item Single administrative interface
   \end{itemize}
-\end{grayframe}
+\end{textondarkpicshaded}
 \note[itemize]{
   \item Visibility is the main challenge with loose coupling
   \item Hard to see what's happening in vendor systems
