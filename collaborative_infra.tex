@@ -818,45 +818,57 @@
 % SECTION 5: RESULTS & LESSONS
 \section[Results \& Next Steps]{Results \& Lessons Learned}
 
-\begin{sectionwithpiclargecentral}[julie_falk_flickr_22258190324_6a583208ae_k.png]{Photo by \href{https://www.flickr.com/photos/piper/}{\underline{Julie Falk}}, CC BY-NC 2.0}{1}
-\end{sectionwithpiclargecentral}
+\begin{sectionwithpiclargeright}[lucid-origin_I_creating_a_slide_set_that_uses_images_for_section_title_background._All_images-0.jpg]{leonardo.ai, CC0}{1}
+\end{sectionwithpiclargeright}
 
 \begin{grayframe}
-  \frametitle{Platform Coverage Expansion}
-  \textbf{Achievements:}
+  \frametitle{Fleet Composition}
+  Onboarded:
   \begin{itemize}
-    \item \textbf{Public Cloud Credits:} AWS, Meta funding
-    \item \textbf{Runner Pools:} IBM (via GHARTS), additional vendors onboarding
-    \item \textbf{Vendor Systems:} AMD, Intel, NVIDIA, ARM for specialized accelerator testing
-    \item Significant increase in platform coverage across CPU architectures and accelerators
-    \item Reduced time-to-market for new platform support
-    \item Improved test reliability through dedicated infrastructure
+    \item \textbf{Public Cloud Credits:} AWS, Meta
+    \item \textbf{Vendor-Managed Runner Pools:} AMD ROCm, IBM s390x, IBM ppc64, Intel XPU, NVIDIA CUDA B200, NVIDIA Windows RTX
+    \item \textbf{Vendor-Managed Test Systems:} Huawei Ascend NPUs, Intel Gaudi HPU
+    \item ...and GitHub Hosted runners too!
+  \end{itemize}
+  ~\\
+  In progress:
+  \begin{itemize}
+    \item \textbf{Vendor-Managed Runner Pools:} IBM s390x (via GHARTS)
+    \item \textbf{Vendor-Managed Test Systems:} RedHat RHEL
   \end{itemize}
 \end{grayframe}
 \note[itemize]{
-  \item Quantify the success - use real numbers
-  \item Specific examples of new platforms added
-  \item Vendors can add support faster than before
-  \item Better infrastructure = more reliable tests
+  \item Present who's been on-boarded already
+  \item And what's ongoing
 }
 
-\begin{grayframe}
-  \frametitle{Vendor Onboarding Experience}
-  \textbf{Positive Feedback:}
+\begin{stripedframe}{Ongoing Work}{%
+  \textbf{Public Clouds}
   \begin{itemize}
-    \item Clear expectations and requirements documentation
-    \item Reasonable onboarding timeline with good support
-    \item Responsive technical support from maintainers
-    \item Fair and transparent governance model
+    \item Migrate CI Jobs (with the help of AI!)
+    \item Migrate Autoscaler to ARC based system
   \end{itemize}
-  ~\\
-  \textbf{Ongoing Initiatives:}
+}{%
+  \textbf{Runner Pools}
   \begin{itemize}
-    \item IBM trialing GHARTS for runner pool integration
-    \item Red Hat collaborating on vendor system visibility improvements
-    \item Vendors actively sharing experiences and best practices
+    \item Deploying GHARTS
+    \item Onboarding IBM pools
+    \item Integrate ARC with GHARTS
   \end{itemize}
-\end{grayframe}
+}{%
+  \textbf{Test Systems}
+  \begin{itemize}
+    \item Integrate into hud
+    \item Enable PR comments and votes
+  \end{itemize}
+}{%
+  \textbf{Governance}
+  \begin{itemize}
+    \item Finalize onboarding process
+    \item Finalize SLO definitions
+  \end{itemize}
+}
+\end{stripedframe}
 \note[itemize]{
   \item Vendors generally positive
   \item Process is clear and documented
@@ -989,3 +1001,10 @@
 }
 
 \end{document}
+
+# TODOs
+
+- Section 5
+- Hidden AI in the slides, put in the notes for the beginning or the end
+- Add QR code for slides
+- Fix references

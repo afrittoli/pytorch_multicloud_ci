@@ -46,6 +46,33 @@
   \setwhitelogofootline{}
 }
 
+\newenvironment{grayframewithpicshaded}[2][]
+{
+  \setbeamercolor{background canvas}{bg=mylightgray}
+  \setbeamercolor*{frametitle}{fg=myblack}
+  \hypersetup{colorlinks,linkcolor=customdark,urlcolor=customdark}
+  \settextcolour{myblack}
+  \setblacklogofootline
+  \setbeamertemplate{background}{
+    \begin{tikzpicture}
+      \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+      \node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{img/#1}};
+      \fill[mylightgray,opacity=0.85] (0,0) rectangle (\the\paperwidth,\the\paperheight);
+    \end{tikzpicture}
+  }
+  \begin{frame}[c]
+    \begin{textblock*}{0.4\paperwidth}(0.005\paperwidth,0.97\paperheight)
+      \begin{beamercolorbox}[wd=0.4\paperwidth]{photolicense}
+        \usebeamerfont{photolicense}#2%
+      \end{beamercolorbox}%
+      \vfill
+    \end{textblock*}
+}
+{
+  \end{frame}
+  \setwhitelogofootline{}
+}
+
 \newenvironment{tealframe}
 {
   \setbeamercolor{background canvas}{bg=myteal!30}
@@ -355,6 +382,41 @@
 {
   \end{frame}
 }
+\newenvironment{striped3frame}[4]
+{
+  \setbeamercolor*{frametitle}{fg=white}
+  \settextcolour{white}
+  \setwhitelogofootline{}
+  \setbeamertemplate{background}{
+      \begin{tikzpicture}
+        \useasboundingbox (0, 0) rectangle(\the\paperwidth,\the\paperheight);
+        % Title bar
+        \fill[color=myblack] (0, 0.86\paperheight) rectangle (\paperwidth, \paperheight);
+        % Three columns extending from bottom to title bar with equal usable space
+        % Usable space per column: ~0.28, overlap: 0.05
+        \fill[color=myblack, opacity=0.8] (0, 0) rectangle (0.35\paperwidth, 0.86\paperheight);
+        \fill[color=custom1, opacity=0.8] (0.28\paperwidth, 0) rectangle (0.68\paperwidth, 0.86\paperheight);
+        \fill[color=custom2, opacity=0.8] (0.61\paperwidth, 0) rectangle (\the\paperwidth, 0.86\paperheight);
+      \end{tikzpicture}
+  	}
+  \begin{frame}[t]
+    \frametitle{#1}
+    \normalsize
+    % Position text in the usable (non-overlapping) area of each column
+    \begin{textblock*}{0.27\paperwidth}(0.01\paperwidth,0.20\paperheight)
+      #2
+    \end{textblock*}
+    \begin{textblock*}{0.27\paperwidth}(0.36\paperwidth,0.20\paperheight)
+      #3
+    \end{textblock*}
+    \begin{textblock*}{0.27\paperwidth}(0.69\paperwidth,0.20\paperheight)
+      #4
+    \end{textblock*}
+}
+{
+  \end{frame}
+}
+
 
 % top picture, 4 columns
 \newenvironment{tpicstripedframe}[5]
@@ -484,6 +546,31 @@
     \begin{textblock*}{\paperwidth}(0cm,0cm)
       \transparent{#3}%
       \includegraphics[width=\paperwidth]{img/#1}
+      \transparent{1}%
+    \end{textblock*}
+    \begin{textblock*}{\paperwidth}(0cm,0.12\paperheight)%
+      \begin{beamercolorbox}[wd=\paperwidth]{section page header}%
+        \usebeamerfont{largecentral}%
+          \centering\insertsection%
+      \end{beamercolorbox}%
+    \end{textblock*}
+    \begin{textblock*}{0.4\paperwidth}(0.005\paperwidth,0.97\paperheight)
+      \begin{beamercolorbox}[wd=0.4\paperwidth]{photolicense}
+        \usebeamerfont{photolicense}#2%
+      \end{beamercolorbox}%
+      \vfill
+    \end{textblock*}
+}
+{
+  \end{frame}
+}
+
+\newenvironment<>{sectionwithpiclargeright}[3][]
+{
+  \begin{frame}[t]
+    \begin{textblock*}{\paperwidth}(0cm,0cm)
+      \transparent{#3}%
+      \includegraphics[height=\paperheight,keepaspectratio]{img/#1}
       \transparent{1}%
     \end{textblock*}
     \begin{textblock*}{\paperwidth}(0cm,0.12\paperheight)%
