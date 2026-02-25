@@ -71,6 +71,9 @@
   \end{itemize}
   }%
 \end{speakerframe}
+\note[itemize]{
+  \item AI is hidden in the slides
+}
 
 \begin{lpicrblack}[calum-lewis-vA1L1jRTM70-unsplash.jpg]{%
   Photo by \href{https://unsplash.com/@calumlewis}{\underline{Calum Lewis}}, CC0
@@ -258,7 +261,7 @@
   {\tiny~\\}
   \textbf{Security Challenges:}
   \begin{itemize}
-    \item Trust and Consistency in a diverse environment
+    \item Trust and integrity in a diverse environment
     \item Central Administration
     \item Trusted Builds
   \end{itemize}
@@ -266,12 +269,8 @@
 \note[itemize]{
   \item With the expanion of the fleet:
   \item Three interconnected challenges
-  \item Scale: both people and money
-  \item Security: can't just accept any infrastructure
-  \item Community: can't degrade quality while scaling
   \item Explain what I mean by community challenges
   \item Need solution that addresses all three
-  \item Consistency may not be the right word, I mean ensuring things are not compromised or altered
 }
 
 % SECTION 2: PYTORCH FOUNDATION & WORKING GROUPS
@@ -421,16 +420,7 @@
 }
 \end{stripedframe}
 \note[itemize]{
-  \item Project autonomy preserved
-  \item Vendor participation encouraged
-  \item Community control maintained
-  \item Transparent decision-making
-  \item Fair representation
-  \item Critical balance: accept help without losing control
-  \item Vendors are stakeholders, not owners
-  \item Community has final say on technical decisions
-  \item All decisions documented and public
-  \item No single vendor can dominate
+  \item Community first
 }
 
 \begin{grayframe}
@@ -463,13 +453,7 @@
   \renewcommand{\arraystretch}{1}
 \end{grayframe}
 \note[itemize]{
-  \item Three main contribution types
-  \item Credits: for vendors who prefer financial contribution
-  \item Runner Pools: vendors provision and maintain runners with GitHub integration
-  \item Test Infrastructure: vendors provide test environments with looser coupling
-  \item Flexibility helps vendors participate
-  \item Each model addresses the scale, security, and experience challenges
-  \item Technical details will be covered in architecture section
+  \item Three paths to contribution in a nutshell
 }
 
 \begin{lblackrwhiteframe}
@@ -498,13 +482,8 @@
   \end{columns}
 \end{lblackrwhiteframe}
 \note[itemize]{
-  \item Different roles have different requirements
-  \item Testers can tolerate some downtime, releasers cannot
-  \item Security requirements scale with privilege level
-  \item Publishers and releasers need highest security (access to secrets, signing keys)
-  \item All roles require monitoring and audit logging
-  \item SLOs help vendors understand expectations
-  \item Clear requirements enable better planning
+  \item Requirements may vary based on the role
+  \item Mention hardening, ephemeral nodes
 }
 
 \begin{lwhiterblackframe}
@@ -535,13 +514,7 @@
   \end{columns}
 \end{lwhiterblackframe}
 \note[itemize]{
-  \item Different roles have different requirements
-  \item Testers can tolerate some downtime, releasers cannot
-  \item Security requirements scale with privilege level
-  \item Publishers and releasers need highest security (access to secrets, signing keys)
-  \item All roles require monitoring and audit logging
-  \item SLOs help vendors understand expectations
-  \item Clear requirements enable better planning
+  \item Impact of trigger level on the community
 }
 
 \begin{whitetoptealframe}
@@ -569,20 +542,8 @@
   \end{columns}
 \end{whitetoptealframe}
 \note[itemize]{
-  \item Clear process reduces friction
-  \item Not just "plug and play" - vendors must meet standards
-  \item Security review is mandatory
-  \item Start small, prove reliability
-  \item Gradual rollout reduces risk
-  \item Maintainers represent project interests
-  \item Vendors can voice concerns but can't veto
-  \item Transparency in decision rationale
-  \item All decisions documented and public
-  \item Conflicts will happen - plan for them
-  \item Maintainers represent project interests
-  \item Vendors can voice concerns but can't veto
-  \item Transparency in decision rationale
-  \item Vendors can leave if unhappy (and vice versa)
+  \item Why TAC is involved
+  \item Mention process timeline and avoiding stale
 }
 
 \begin{grayframe}
@@ -618,14 +579,6 @@
 \end{grayframe}
 \note[itemize]{
   \item System must remain manageable as it grows
-  \item Standardization is key to scalability
-  \item Automation reduces maintenance burden
-  \item Centralized monitoring provides visibility
-  \item Public dashboards build trust with community
-  \item Track performance: build times, success rates
-  \item Understand true costs of each platform
-  \item Hold vendors accountable to SLAs
-  \item Comprehensive logging for accountability
   \item Self-service reduces bottlenecks
 }
 
@@ -663,14 +616,8 @@
 }{0.50}{0.45}
 \end{lgrayframerpicscaled}
 \note[itemize]{
-  % TODO here on in-slide, link back to original challenges
-  \item AWS is the foundation, but not the only option
-  \item Multi-cloud WG working to make system portable
-  \item Autoscaler being generalized for other clouds
-  \item CI jobs being standardized to run anywhere
-  \item IaC approach enables reproducibility
-  \item Close collaboration between WG and infra team
-  \item Goal: reduce vendor lock-in while maintaining stability
+  \item Address financial sustainability challenge
+  \item Provide clear path for cash based engagement
 }
 
 \begin{lwhiterblackframeconfig}{0.50}
@@ -703,14 +650,7 @@
   \end{columns}
 \end{lwhiterblackframeconfig}
 \note[itemize]{
-  \item GHARTS solves key security and scalability challenges
-  \item Traditional approach uses long-lived tokens (security risk)
-  \item GHARTS provides short-lived tokens with proper scoping
-  \item Centralized control while vendors manage infrastructure
-  \item Automated lifecycle reduces manual overhead
-  \item All runner activity logged for audit
-  \item Standard interface makes vendor onboarding easier
-  \item Enables trust but verify model
+  \item GHARTS addresses security and scalability challenges
 }
 
 \begin{whitetoptealframeconfig}{0.30}
@@ -739,14 +679,7 @@
   \end{columns}
 \end{whitetoptealframeconfig}
 \note[itemize]{
-  \item GHARTS is the central control plane
-  \item Token service is the security foundation
-  \item Short-lived tokens (minutes to hours, not days/months)
-  \item Policy engine enforces who can run what workloads
-  \item Metrics collector provides visibility
-  \item Automated lifecycle reduces operational burden
-  \item Vendors can't bypass security controls
-  \item System scales to many vendors and runners
+  \item Explain JIT and security benefits
 }
 
 \begin{lblackrwhiteframe}
@@ -774,14 +707,7 @@
   \end{columns}
 \end{lblackrwhiteframe}
 \note[itemize]{
-  \item Different model from GitHub runners
-  \item Looser coupling gives vendors more flexibility
-  \item Good for specialized hardware not suitable for runners
-  \item Vendors control their test environment completely
-  \item CI orchestrates but doesn't execute directly
-  \item Results still integrated into PR workflow
-  \item Lower barrier to entry for some vendors
-  \item Accelerator Integration WG created this process
+  \item Decoupled model. Out of tree workflow definitions!
 }
 
 \begin{textondarkpicshaded}[hud-2-dark.png]{}
@@ -792,7 +718,7 @@
     \item Multiple routes to Integration
     \item Address several challenges, but
     \item Creates extra complexity
-    \item Impedes visibility across the board
+    \item Risks impeding visibility across the board
   \end{itemize}
   ~\\
   \textbf{Ongoing Work to Solve:}
@@ -804,15 +730,7 @@
   \end{itemize}
 \end{textondarkpicshaded}
 \note[itemize]{
-  \item Visibility is the main challenge with loose coupling
-  \item Hard to see what's happening in vendor systems
-  \item Working on standardized reporting
-  \item Event relay provides real-time updates
-  \item Dashboard gives unified view across all vendors
-  \item Metrics help track reliability and performance
-  \item Debugging tools help when things go wrong
-  \item Goal: maintain flexibility while improving visibility
-  \item Balance between vendor autonomy and project needs
+  \item The complexity that is born from multiple routes
 }
 
 % SECTION 5: RESULTS & LESSONS
@@ -877,99 +795,59 @@
   \item Be honest about challenges faced
 }
 
-\begin{grayframe}
-  \frametitle{Key Lessons Learned}
-  \textbf{Principles for Collaborative Infrastructure:}
+\begin{blackframe}
+  \frametitle{Lessons Learned}
+  \small
   \begin{itemize}
-    \item \textbf{Fair Governance:} Protect everyone's interests, vendors can't veto but have voice
-    \item \textbf{Engage Vendors Early:} Let them help build solutions, not just consume them
-    \item \textbf{Empower Maintainers:} Give infra team authority and tools to manage at scale
-    \item \textbf{Security First:} Build security in from day one, not as afterthought
-    \item \textbf{Flexible Models:} Multiple contribution paths reduce friction and attrition
+    \item \textbf{Clear onboarding:} Streamlined process and transparent decision making
+    \item \textbf{Document SLOs:} Define roles and SLOs, include community engagement
+    \item \textbf{Reusable Tech Stack:} Share proven configurations and best practices
+    \item \textbf{Engage Vendors in WG:} Vendors can and want to contribute to the solution
+    \item \textbf{Self Service First:} Distributed engineering effort
+    \item \textbf{Empower Maintainers:} Give infra team tools to manage at scale
+    \item \textbf{Security:} Consider contributed code and infrastructure as untrusted by default
+    \item \textbf{No one-size-fit-all:} Multiple contribution paths reduce attrition
   \end{itemize}
-  ~\\
-  \textbf{Challenges:}
-  \begin{itemize}
-    \item Balancing vendor needs with project sustainability
-    \item Standardization across diverse platforms and requirements
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Governance clarity prevents conflicts
-  \item Security can't be an afterthought
-  \item Flexibility helps vendors participate
-  \item Transparency builds trust
-  \item Balance is ongoing challenge
-  \item Standardization requires compromise
-}
+\end{blackframe}
 
 \begin{grayframe}
-  \frametitle{Applicability to Other LF Projects}
-  \textbf{Shared Challenges:}
+  \frametitle{What's Next}
   \begin{itemize}
-    \item Accepting vendor infrastructure
-    \item Maintaining project neutrality
-    \item Ensuring transparency
-    \item Achieving financial sustainability
-  \end{itemize}
-  ~\\
-  \textbf{This Model Can Help:}
-  \begin{itemize}
-    \item Proven governance framework
-    \item Technical architecture patterns
-    \item Onboarding playbook
+    \item Third-party builds and releases
+    \item Consistent metrics, monitoring and UX across the fleet
+    \item Adopt standards like OpenTelemetry/CDEvents
+    \item Continue balancing community needs and project sustainability
   \end{itemize}
 \end{grayframe}
-\note[itemize]{
-  \item Many LF projects face similar issues
-  \item Vendor contributions are common need
-  \item Neutrality is critical for LF projects
-  \item This model is reusable
-  \item Share learnings with community
-}
 
-\begin{grayframe}
-  \frametitle{Future Directions}
-  \textbf{Ongoing Activities:}
+\begin{4squaresext}{To summarize}{%
+  \vspace{1.0em}
   \begin{itemize}
-    \item Complete GHARTS rollout with IBM and additional vendors
-    \item Enhance monitoring and observability across all integration models
-    \item Expand portable CI/CD tooling for multi-cloud deployments
-    \item Standardize event streaming with OpenTelemetry/CDEvents
+    \item PyTorch builds the LLMs that power\\the AI revolution
+    \item Hosted by the PyTorch Foundation
   \end{itemize}
-  ~\\
-  \textbf{Long-term Goals:}
+}{%
+  \vspace{1.0em}
+  CI/CD Infra challenges:
   \begin{itemize}
-    \item Share governance and technical patterns with other LF projects
-    \item Build community of practice around collaborative infrastructure
-    \item Continuously refine based on vendor and maintainer feedback
+    \item community
+    \item scale (financial/engineering)
+    \item security
   \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Model is working, now scale it
-  \item More automation reduces overhead
-  \item Help other projects adopt this
-  \item Governance will evolve
-  \item Create community around this approach
+}{%
+  \vspace{1.0em}
+  \begin{itemize}
+    \item The solution is a mixture of\\governance and technology
+    \item Engaged with Vendor through\\Working Groups to address\\challenges
+  \end{itemize}
+}{%
+  \vspace{1.0em}
+  \begin{itemize}
+    \item Multiple paths to contribution, consolidate visibility and administration
+    \item Work continues to make the CI/CD truly cloud agnostic
+  \end{itemize}
 }
-
-\begin{grayframe}
-  \frametitle{Key Takeaways}
-  \begin{itemize}
-    \item \textbf{Sustainable Scaling:} Distribute infrastructure costs while maintaining project control
-    \item \textbf{Governance Matters:} Fair rules enable vendor participation without compromising autonomy
-    \item \textbf{Security \& Transparency:} Non-negotiable foundations that build trust
-    \item \textbf{Flexible Models:} Multiple contribution paths reduce friction and increase adoption
-    \item \textbf{Reusable Pattern:} This model can help other Linux Foundation projects
-  \end{itemize}
-\end{grayframe}
-\note[itemize]{
-  \item Summarize main points
-  \item Emphasize that this works
-  \item Governance is key to success
-  \item Security and transparency build trust
-  \item Encourage others to try this model
-}
+\end{4squaresext}
 
 % SECTION 6: Q&A
 \section[Q\&A]{Questions?}
@@ -1004,10 +882,3 @@
 }
 
 \end{document}
-
-# TODOs
-
-- Section 5
-- Hidden AI in the slides, put in the notes for the beginning or the end
-- Add QR code for slides
-- Fix references
