@@ -17,13 +17,13 @@
 \tikzexternalize[prefix=tikz-cache/]
 \usepackage{color}
 \usepackage{colortbl}
-\usepackage{fontawesome5}
+\usepackage{fontawesome6}
 % \usepackage{svg}
 \usepackage{transparent}
 
 
 \title{Collaborative Infrastructure at Scale: PyTorch's Multi-Cloud CI Model}
-\date[25 Feb 2026]{25 Feb 2026 | \textbf{X} ~@blackchip76 | \faGithub ~afrittoli}
+\date[25 Feb 2026]{25 Feb 2026 | \faXTwitter ~@blackchip76 | \faGithub ~afrittoli}
 \author[Andrea Frittoli]{%
   Andrea Frittoli \\
   Developer Advocate \\
@@ -59,7 +59,7 @@
 
 \begin{speakerframe}[af_wind.jpg]{Andrea Frittoli}%
   {%
-  \faGithub ~afrittoli | \faLinkedin ~andreafrittoli | \textbf{X} ~@blackchip76
+  \faGithub ~afrittoli | \faLinkedin ~andreafrittoli | \faXTwitter ~@blackchip76
   }%
   {%
   \begin{itemize}
@@ -635,37 +635,33 @@
 \begin{sectionwithpiclargecentral}[nadi-whatisdelirium-fZ8uf_L52wg-unsplash.jpg]{Photo by \href{https://unsplash.com/@whatisdelirium}{\underline{Nadi Whatisdelirium}}, CC0}{1}
 \end{sectionwithpiclargecentral}
 
-\begin{grayframe}
-  \frametitle{High Level Architecture}
-  \centering
-  \includegraphics[width=0.95\textwidth,keepaspectratio]{img/pytorch-multi-cloud-infra-Overview.png}
-\end{grayframe}
+\begin{tblackbgrayframe}{High Level Architecture}
+  \vspace{1.5em}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth,height=0.80\textheight,keepaspectratio]{img/pytorch-multi-cloud-infra-Overview.png}
+  \end{center}
+\end{tblackbgrayframe}
 
-\begin{grayframe}
+\begin{lgrayframerpicscaled}[pytorch-multi-cloud-infra-Infrastructure.png]{}{%
   \frametitle{Public Cloud Infrastructure}
-  \begin{columns}[T]
-    \column{0.48\textwidth}
-    \textbf{Current AWS Setup:}
-    \begin{itemize}
-      \item Primary infrastructure hosted on AWS
-      \item Two accounts, funded by AWS Credits and Meta
-      \item Self-hosted GitHub Actions runners
-      \item Managed by PyTorch CI/CD team
-      \item Autoscaling based on workload demand
-    \end{itemize}
-    ~\\
-    \textbf{Multi-Cloud \& Infra Working Group Initiatives:}
-    \begin{itemize}
-      \item \textbf{Portable CI Jobs:} Run in a container, remove cloud-specific assumptions
-      \item \textbf{Reusable Autoscaler:} Developing portable autoscale based on ARC
-      \item \textbf{Infrastructure as Code:} Reusable terraform modules
-    \end{itemize}
-    
-    \column{0.50\textwidth}
-    \centering
-    \includegraphics[width=\textwidth,keepaspectratio]{img/pytorch-multi-cloud-infra-Overview.png}
-  \end{columns}
-\end{grayframe}
+  \small
+  \textbf{Current AWS Setup:}
+  \begin{itemize}
+    \item Primary infrastructure hosted on AWS
+    \item Two accounts, funded by AWS Credits and Meta
+    \item Self-hosted GitHub Actions runners
+    \item Managed by PyTorch Infra team
+    \item Autoscaling based on workload demand
+  \end{itemize}
+  ~\\
+  \textbf{Multi-Cloud \& Infra Working Group Initiatives:}
+  \begin{itemize}
+    \item \textbf{Portable CI Jobs:} Run in a container, remove cloud-specific assumptions
+    \item \textbf{Reusable Autoscaler:} Developing portable autoscale based on ARC
+    \item \textbf{Infrastructure as Code:} Reusable OpenTofu modules
+  \end{itemize}
+}{0.50}{0.45}
+\end{lgrayframerpicscaled}
 \note[itemize]{
   % TODO here on in-slide, link back to original challenges
   \item AWS is the foundation, but not the only option
@@ -677,28 +673,35 @@
   \item Goal: reduce vendor lock-in while maintaining stability
 }
 
-\begin{grayframe}
-  \frametitle{Vendor-Managed GitHub Runners}
+\begin{lwhiterblackframeconfig}{0.50}
+  \frametitle{Vendor-Managed Runner Pools}
   \begin{columns}[T]
-    \column{0.48\textwidth}
-    \textbf{GitHub Actions Runner Token Service (GHARTS):}
+    \column{0.46\textwidth}
+    \small
+    \settextcolour{myblack}
+    \textbf{Challenges:}
     \begin{itemize}
-      \item Secure, self-service API to register self-hosted runners
-      \item No long-lived credentials, on demand short-lived tokens
-      \item Enforcement of runner metadata (label, group) and quotas
-      \item Central administration, bulk operations
-      \item Audit logging for all runner operations
-      \item MVP being deployed, IBM to trial service
+      \item Long lived admin credentials
+      \item Runner metadata cannot be enforced
+      \item Lack of central administration
+      \item Lack of auditability
     \end{itemize}
     
-    \column{0.50\textwidth}
-    \centering
-    \includegraphics[width=\textwidth,keepaspectratio]{img/hub.png}
-    \vspace{0.3em}
-    
-    \includegraphics[width=\textwidth,keepaspectratio]{img/hub-api.png}
+    \column{0.42\textwidth}
+    \small
+    \settextcolour{white}
+    \textbf{Proposed Solution:}
+    \begin{itemize}
+      \item GHA Runner Token Service (GHARTS)
+      \item Use LFID for authentication
+      \item No Admin Credentials to vendors
+      \item Ephemeral, non reusable credentials
+      \item Enforcement of metadata and quota
+      \item Centralized administration
+      \item Auditability
+    \end{itemize}
   \end{columns}
-\end{grayframe}
+\end{lwhiterblackframeconfig}
 \note[itemize]{
   \item GHARTS solves key security and scalability challenges
   \item Traditional approach uses long-lived tokens (security risk)
@@ -710,25 +713,31 @@
   \item Enables trust but verify model
 }
 
-\begin{grayframe}
-  \frametitle{GHARTS Architecture}
-  \begin{columns}[T]
+\begin{whitetoptealframeconfig}{0.30}
+  \frametitle{GHARTS Provisioning Flow}
+  \vspace{1.5em}
+  \centering
+  \includegraphics[width=0.65\textwidth,keepaspectratio]{img/jit_flow-JIT Runner Provisioning Flow Demo.png}
+  
+  \vspace{2em}
+  \begin{columns}[t]
     \column{0.48\textwidth}
-    \textbf{Workflow:}
+    \scriptsize
     \begin{itemize}
       \item Vendor authenticates using existing credentials (LFID)
-      \item Vendor requests a JIT config from GHARTS using the JWT
+      \item Vendor requests a JIT config using the JWT
       \item GHARTS verifies AuthN and AuthZ for vendor
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \scriptsize
+    \begin{itemize}
       \item GHARTS requests JIT config from GitHub
       \item Vendor uses JIT config to provision a runner
       \item JIT lasts 1h, and can only be used Once
     \end{itemize}
-    
-    \column{0.50\textwidth}
-    \centering
-    \includegraphics[width=\textwidth,keepaspectratio]{img/pytorch-multi-cloud-infra-Overview.png}
   \end{columns}
-\end{grayframe}
+\end{whitetoptealframeconfig}
 \note[itemize]{
   \item GHARTS is the central control plane
   \item Token service is the security foundation
@@ -740,24 +749,31 @@
   \item System scales to many vendors and runners
 }
 
-\begin{grayframe}
+\begin{lblackrwhiteframe}
   \frametitle{Vendor-Managed Test Systems}
-  \textbf{Accelerator Integration Working Group Initiative:}
-  \begin{itemize}
-    \item Loosely coupled with GitHub Actions
-    \item Vendors provide test infrastructure and environments
-    \item CI triggers tests via webhooks or API calls
-    \item Results reported back to GitHub
-  \end{itemize}
-  ~\\
-  \textbf{Use Cases:}
-  \begin{itemize}
-    \item Specialized hardware testing (TPUs, custom accelerators)
-    \item Long-running performance benchmarks
-    \item Platform-specific integration tests
-    \item Vendor-specific optimization validation
-  \end{itemize}
-\end{grayframe}
+  \vspace{3em}
+  \begin{columns}[c]
+    \column{0.55\textwidth}
+    \small
+    \textbf{Accelerator Integration Working Group Initiative:}
+    \begin{itemize}
+      \item Loosely coupled with PyTorch CI
+      \item Events relayed to external repository
+      \item Vendors provide test infrastructure and environments
+      \item Out-of-tree test workflows
+    \end{itemize}
+    \vspace{0.5em}
+    \textbf{Use Cases:}
+    \begin{itemize}
+      \item Specialized hardware testing (TPUs, custom accelerators)
+      \item Produce test results only
+    \end{itemize}
+
+    \column{0.45\textwidth}
+    \centering
+    \raisebox{-0.5\height}{\includegraphics[width=1.0\textwidth,height=0.6\paperheight,keepaspectratio]{img/accelerators-integration.png}}
+  \end{columns}
+\end{lblackrwhiteframe}
 \note[itemize]{
   \item Different model from GitHub runners
   \item Looser coupling gives vendors more flexibility
@@ -963,7 +979,7 @@
   \begin{itemize}
     \item Andrea Frittoli
     \item andrea.frittoli@uk.ibm.com
-    \item \textbf{X} ~@blackchip76 | \faGithub ~afrittoli
+    \item \faXTwitter ~@blackchip76 | \faGithub ~afrittoli
   \end{itemize}
 \end{blackframe}
 \note[itemize]{

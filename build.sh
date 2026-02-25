@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-TEX_FILENAME=collaborative_infra
+TEX_FILENAME=${TEX_FILENAME:-collaborative_infra}
 MODE=${1:-full}  # draft or full
 ENGINE=${2:-lualatex}  # lualatex (default) or xelatex
 

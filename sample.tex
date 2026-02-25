@@ -1,0 +1,606 @@
+\RequirePackage{pdfmanagement-testphase}
+\DeclareDocumentMetadata{}
+
+\documentclass[aspectratio=169,11pt,hyperref={colorlinks=true}]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{listingsutf8}
+\usepackage{listings-golang}
+\usepackage{tikz}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{fontawesome6}
+\usepackage{transparent}
+
+\title{AF Beamer Theme Showcase}
+\date[\today]{\today}
+\author[Sample Author]{%
+  Sample Author \\
+  Sample Organization \\
+  sample@example.com \\
+}
+
+\usetheme{af}
+
+% Code style
+\setlststyle
+
+\begin{document}
+
+% ============================================================================
+% TITLE PAGE
+% ============================================================================
+\begin{frame}
+\titlepage{}
+\end{frame}
+
+% ============================================================================
+% TABLE OF CONTENTS
+% ============================================================================
+\begin{lpicrblack}[calum-lewis-vA1L1jRTM70-unsplash.jpg]{%
+  Photo by Calum Lewis, CC0
+  }%
+  {%
+  \tableofcontents
+  }%
+  {}
+  \frametitle{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Contents}
+\end{lpicrblack}
+
+% ============================================================================
+% SECTION 1: BASIC FRAMES
+% ============================================================================
+\section{Basic Frame Environments}
+
+% Standard section page
+\begin{sectionwithpiclargecentral}[universal_upscale_0_42586ee4-8ead-4a8f-98bd-fe9c040f6591_0.jpg]{leonardo.ai, CC0}{1}
+\end{sectionwithpiclargecentral}
+
+% Gray frame
+\begin{grayframe}
+  \frametitle{Gray Frame Environment}
+  
+  \textbf{Features:}
+  \begin{itemize}
+    \item Light gray background
+    \item Black text
+    \item Black logo in footline
+    \item Good for content-heavy slides
+  \end{itemize}
+  
+  \vspace{1em}
+  
+  \textbf{Usage:} \textbackslash begin\{grayframe\} ... \textbackslash end\{grayframe\}
+\end{grayframe}
+
+% Black frame
+\begin{blackframe}
+  \frametitle{Black Frame Environment}
+  
+  \textbf{Features:}
+  \begin{itemize}
+    \item Dark blue/black background
+    \item White text
+    \item White logo in footline
+    \item Great for emphasis or contrast
+  \end{itemize}
+  
+  \vspace{1em}
+  
+  \textbf{Usage:} \textbackslash begin\{blackframe\} ... \textbackslash end\{blackframe\}
+\end{blackframe}
+
+% Teal frame
+\begin{tealframe}
+  \frametitle{Teal Frame Environment}
+  
+  \textbf{Features:}
+  \begin{itemize}
+    \item Light teal background (myteal!30)
+    \item Black text
+    \item Black logo in footline
+    \item Softer alternative to gray
+  \end{itemize}
+  
+  \vspace{1em}
+  
+  \textbf{Usage:} \textbackslash begin\{tealframe\} ... \textbackslash end\{tealframe\}
+\end{tealframe}
+
+% ============================================================================
+% SECTION 2: SPLIT FRAMES
+% ============================================================================
+\section{Split Frame Environments}
+
+\begin{sectionwithpicrx}[climbing-cat.jpg]{Photo credit}{1}
+\end{sectionwithpicrx}
+
+% Left gray, right white
+\begin{lgrayrwhiteframe}
+  \frametitle{Left Gray Right White Frame}
+  
+  \begin{columns}[T]
+    \column{0.45\textwidth}
+    \textbf{Left side (gray):}
+    \begin{itemize}
+      \item Gray background on left
+      \item White background on right
+      \item Smooth gradient transition
+    \end{itemize}
+    
+    \column{0.45\textwidth}
+    \textbf{Right side (white):}
+    \begin{itemize}
+      \item Perfect for contrasting content
+      \item Image on one side, text on other
+    \end{itemize}
+  \end{columns}
+\end{lgrayrwhiteframe}
+
+% Left black, right white
+\begin{lblackrwhiteframe}
+  \frametitle{Left Black Right White Frame}
+  
+  \begin{columns}[T]
+    \column{0.45\textwidth}
+    \textbf{Left side (black):}
+    \begin{itemize}
+      \item Dark background on left
+      \item White background on right
+      \item High contrast design
+    \end{itemize}
+    
+    \column{0.45\textwidth}
+    \textbf{Right side (white):}
+    \begin{itemize}
+      \item Great for dramatic effect
+      \item Code or diagrams on white
+    \end{itemize}
+  \end{columns}
+\end{lblackrwhiteframe}
+
+% Left white, right black
+\begin{lwhiterblackframe}
+  \frametitle{Left White Right Black Frame}
+  
+  \begin{columns}[T]
+    \column{0.45\textwidth}
+    \textbf{Left side (white):}
+    \begin{itemize}
+      \item White background on left
+      \item Dark background on right
+      \item Reverse of previous
+    \end{itemize}
+    
+    \column{0.45\textwidth}
+    \textbf{Right side (black):}
+    \begin{itemize}
+      \item Alternative layout
+      \item Flexible design options
+    \end{itemize}
+  \end{columns}
+\end{lwhiterblackframe}
+
+% White top, teal bottom
+\begin{whitetoptealframe}
+  \frametitle{White Top Teal Bottom Frame}
+  
+  \vspace{2em}
+  
+  \textbf{Features:}
+  \begin{itemize}
+    \item White background on top
+    \item Light gray background on bottom
+    \item Good for diagrams at top, text below
+  \end{itemize}
+\end{whitetoptealframe}
+
+% ============================================================================
+% SECTION 3: MULTI-COLUMN FRAMES
+% ============================================================================
+\section{Multi-Column Frame Environments}
+
+\begin{sectionwithpic}[pouncing-cat.png]{Photo credit}
+\end{sectionwithpic}
+
+% 2 columns frame
+\begin{2columnsframe}{Two Columns Frame}{%
+  \textbf{Left Column:}
+  \begin{itemize}
+    \item Colored background blocks
+    \item Two equal columns
+    \item Automatic layout
+  \end{itemize}
+}{%
+  \textbf{Right Column:}
+  \begin{itemize}
+    \item Tekton-inspired colors
+    \item Great for comparisons
+    \item Side-by-side content
+  \end{itemize}
+}
+\end{2columnsframe}
+
+% 3 squares frame
+\begin{3squares}{Three Squares Frame}{%
+  \textbf{Top Left:}
+  \begin{itemize}
+    \item Custom color 1
+    \item White text
+  \end{itemize}
+}{%
+  \textbf{Bottom Left:}
+  \begin{itemize}
+    \item Custom color 3
+    \item White text
+  \end{itemize}
+}{%
+  \textbf{Right Side:}
+  \begin{itemize}
+    \item Light gray background
+    \item Black text
+    \item Larger area
+  \end{itemize}
+}
+\end{3squares}
+
+% 4 squares extended frame
+\begin{4squaresext}{Four Squares Extended Frame}{%
+  \textbf{Top Left:}
+  \begin{itemize}
+    \item Custom color 1
+    \item White text
+  \end{itemize}
+}{%
+  \textbf{Top Right:}
+  \begin{itemize}
+    \item Custom color 2
+    \item White text
+  \end{itemize}
+}{%
+  \textbf{Bottom Left:}
+  \begin{itemize}
+    \item Custom color 3
+    \item White text
+  \end{itemize}
+}{%
+  \textbf{Bottom Right:}
+  \begin{itemize}
+    \item Light gray
+    \item Dark text
+  \end{itemize}
+}
+\end{4squaresext}
+
+% Striped frame (4 vertical columns)
+\begin{stripedframe}{Striped Frame (4 Columns)}{%
+  \textbf{Column 1:}
+  \begin{itemize}
+    \item Black
+    \item White text
+  \end{itemize}
+}{%
+  \textbf{Column 2:}
+  \begin{itemize}
+    \item Custom 1
+    \item White text
+  \end{itemize}
+}{%
+  \textbf{Column 3:}
+  \begin{itemize}
+    \item Custom 2
+    \item White text
+  \end{itemize}
+}{%
+  \textbf{Column 4:}
+  \begin{itemize}
+    \item Custom 3
+    \item White text
+  \end{itemize}
+}
+\end{stripedframe}
+
+% Top picture striped frame
+\begin{tpicstripedframe}{pytorch-logo.png}{%
+  \textbf{Column 1:}
+  \begin{itemize}
+    \item Image at top
+    \item 4 columns below
+  \end{itemize}
+}{%
+  \textbf{Column 2:}
+  \begin{itemize}
+    \item Colored stripes
+    \item White text
+  \end{itemize}
+}{%
+  \textbf{Column 3:}
+  \begin{itemize}
+    \item Great for logos
+    \item Or diagrams
+  \end{itemize}
+}{%
+  \textbf{Column 4:}
+  \begin{itemize}
+    \item Flexible layout
+    \item Visual appeal
+  \end{itemize}
+}
+\end{tpicstripedframe}
+
+% ============================================================================
+% SECTION 4: PICTURE FRAMES
+% ============================================================================
+\section{Picture Frame Environments}
+
+\begin{sectionwithpicmediumcentral}[blue-containers.jpg]{Photo credit}
+\end{sectionwithpicmediumcentral}
+
+% Left picture, right black
+\begin{lpicrblack}[cat-walking-on-stairs.jpg]{%
+  Photo credit
+  }%
+  {%
+  \frametitle{Left Picture Right Black Frame}
+  
+  \textbf{Features:}
+  \begin{itemize}
+    \item Full-height image on left
+    \item Black background on right
+    \item White text
+    \item Photo license at bottom
+  \end{itemize}
+  }%
+  {}
+\end{lpicrblack}
+
+% Text on dark picture
+\begin{textondarkpic}[dan-cristian-padure-LDMgqr8z7ZE-unsplash.jpg]{Photo by Dan Cristian Padure, CC0}
+  \frametitle{Text on Dark Picture Frame}
+  
+  \vspace{2em}
+  
+  \textbf{Features:}
+  \begin{itemize}
+    \item Full-screen background image
+    \item White text overlay
+    \item Photo license at bottom
+    \item Great for dramatic effect
+  \end{itemize}
+\end{textondarkpic}
+
+% Gray frame with right picture
+\begin{lgrayframerpic}[chewy-I-rgDPLKogs-unsplash.jpg]{Photo credit}{%
+  \frametitle{Gray Frame with Right Picture}
+  
+  \textbf{Features:}
+  \begin{itemize}
+    \item Gray background on left
+    \item Image on right side
+    \item Flexible positioning
+  \end{itemize}
+}{0.6}
+\end{lgrayframerpic}
+
+% White text on two pictures
+\begin{whitetextontwopics}[john-yunker-Z9rKuPEU6Uc-unsplash.jpg]{Left Image Text}{mike-benna-X-NAMq6uP3Q-unsplash.jpg}{Right Image Text}
+\end{whitetextontwopics}
+
+% ============================================================================
+% SECTION 5: SPECIAL FRAMES
+% ============================================================================
+\section{Special Frame Environments}
+
+\begin{sectionwithpiclargecentraldark}[pierre-bamin--ltjzTfhpCI-unsplash.jpg]{Photo credit}{0.7}
+\end{sectionwithpiclargecentraldark}
+
+% Top black, bottom gray
+\begin{tblackbgrayframe}{Top Black Bottom Gray Frame}
+  \textbf{Features:}
+  \begin{itemize}
+    \item Black title bar at top
+    \item Light gray background below
+    \item Black text in content area
+    \item Clean, professional look
+  \end{itemize}
+  
+  \vspace{1em}
+  
+  \textbf{Usage:} \textbackslash begin\{tblackbgrayframe\}\{Title\} ... \textbackslash end\{tblackbgrayframe\}
+\end{tblackbgrayframe}
+
+% Top dark, bottom picture
+\begin{tdarkbpicframe}{Top Dark Bottom Picture Frame}
+  \textbf{Features:}
+  \begin{itemize}
+    \item Dark background at top
+    \item Space for image at bottom
+    \item White text
+    \item Good for visual content
+  \end{itemize}
+  
+  \vspace{2em}
+  \centering
+  \includegraphics[width=0.5\textwidth,keepaspectratio]{img/pytorch-logo.png}
+\end{tdarkbpicframe}
+
+% Speaker frame
+\begin{speakerframe}[af_wind.jpg]{Speaker Name}%
+  {%
+  \faGithub ~username | \faLinkedin ~profile | \faXTwitter ~@handle
+  }%
+  {%
+  \textbf{Speaker Frame Environment}
+  
+  \begin{itemize}
+    \item Speaker photo on right
+    \item Name and social links
+    \item Bio or description
+    \item Gradient background
+  \end{itemize}
+  }%
+\end{speakerframe}
+
+% ============================================================================
+% SECTION 6: CODE LISTINGS
+% ============================================================================
+\section{Code Listing Styles}
+
+\begin{sectionwithpiclargecentral}[thom-milkovic-FTNGfpYCpGM-unsplash.jpg]{Photo credit}{1}
+\end{sectionwithpiclargecentral}
+
+\begin{frame}[fragile]
+  \frametitle{Light Code Listing Style}
+  
+  \textbf{Using \textbackslash setlststyle for light backgrounds:}
+  
+  \setlststyle
+  \begin{lstlisting}[language=Python]
+def hello_world():
+    """A simple Python function"""
+    message = "Hello, World!"
+    print(message)
+    return True
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Dark Code Listing Style}
+  
+  \setbeamercolor{background canvas}{bg=myblack}
+  \setbeamercolor*{frametitle}{fg=white}
+  \settextcolour{white}
+  \setwhitelogofootline{}
+  
+  \textbf{Using \textbackslash setlststyledark for dark backgrounds:}
+  
+  \setlststyledark
+  \begin{lstlisting}[language=Python]
+def hello_world():
+    """A simple Python function"""
+    message = "Hello, World!"
+    print(message)
+    return True
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Docker Listing}
+  
+  \textbf{Custom Docker language definition:}
+  
+  \setlststyle
+  \begin{lstlisting}[language=docker]
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y python3
+WORKDIR /app
+COPY . .
+CMD ["python3", "app.py"]
+  \end{lstlisting}
+\end{frame}
+
+% ============================================================================
+% SECTION 7: INLINE ELEMENTS
+% ============================================================================
+\section{Inline Elements \& Utilities}
+
+\begin{sectionwithpiclargecentral}[nasa-084iI8XTfN0-unsplash.jpg]{Photo by NASA, CC0}{1}
+\end{sectionwithpiclargecentral}
+
+\begin{grayframe}
+  \frametitle{Inline Text Formatting}
+  
+  \textbf{Code command:}
+  \begin{itemize}
+    \item Use \textbackslash code\{text\} for inline code: \code{example code}
+    \item Alternative: \code{variable name} for inline formatting
+  \end{itemize}
+  
+  \vspace{1em}
+  
+  \textbf{Text color control:}
+  \begin{itemize}
+    \item \textbackslash settextcolour\{white\} - sets all text to white
+    \item \textbackslash settextcolour\{myblack\} - sets all text to black
+    \item Affects normal text, items, subitems, and blocks
+  \end{itemize}
+  
+  \vspace{1em}
+  
+  \textbf{Footline customization:}
+  \begin{itemize}
+    \item \textbackslash setwhitelogofootline - white logo with page numbers
+    \item \textbackslash setblacklogofootline - black logo with page numbers
+    \item \textbackslash setwhitefootline - no logo, white text
+  \end{itemize}
+\end{grayframe}
+
+% ============================================================================
+% SECTION 8: COLOR PALETTE
+% ============================================================================
+\section{Color Palette}
+
+\begin{sectionwithpiclargecentral}[sereja-ris-g3B53PbBfwU-unsplash.png]{Photo credit}{1}
+\end{sectionwithpiclargecentral}
+
+\begin{grayframe}
+  \frametitle{Available Colors}
+  
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{Primary Colors:}
+    \begin{itemize}
+      \item \textcolor{myblack}{myblack} - Dark forest green
+      \item \textcolor{myblue}{myblue} - Teal
+      \item \textcolor{myteal}{myteal} - Light teal
+      \item \textcolor{mygray}{mygray} - Gray-green
+      \item \textcolor{mylightgray}{mylightgray} - Light mint
+    \end{itemize}
+    
+    \column{0.48\textwidth}
+    \textbf{Accent Colors:}
+    \begin{itemize}
+      \item \textcolor{custom1}{custom1} - Medium green
+      \item \textcolor{custom2}{custom2} - Teal
+      \item \textcolor{custom3}{custom3} - Yellow-green
+      \item \textcolor{customdark}{customdark} - Dark forest
+      \item \textcolor{tektonblue}{tektonblue} - Olive green
+    \end{itemize}
+  \end{columns}
+  
+  \vspace{1em}
+  
+  \textbf{All colors inspired by the LFMS 2024 background image}
+\end{grayframe}
+
+% ============================================================================
+% FINAL SLIDE
+% ============================================================================
+\section{Summary}
+
+\begin{sectionwithpiclargecentral}[antoine-petitteville-RIdYHUISNuM-unsplash.jpg]{Photo credit}{1}
+\end{sectionwithpiclargecentral}
+
+\begin{blackframe}
+  \frametitle{Environment Summary}
+  
+  \textbf{Basic Frames:} grayframe, blackframe, tealframe
+  
+  \textbf{Split Frames:} lgrayrwhiteframe, lblackrwhiteframe, lwhiterblackframe, whitetoptealframe
+  
+  \textbf{Multi-Column:} 2columnsframe, 3squares, 4squaresext, stripedframe, tpicstripedframe
+  
+  \textbf{Picture Frames:} lpicrblack, textondarkpic, lgrayframerpic, whitetextontwopics
+  
+  \textbf{Special:} tblackbgrayframe, tdarkbpicframe, speakerframe
+  
+  \textbf{Section Pages:} sectionwithpic, sectionwithpicrx, sectionwithpiclargecentral, sectionwithpiclargecentraldark, sectionwithpicmediumcentral
+  
+  \textbf{Code:} \textbackslash setlststyle, \textbackslash setlststyledark, docker language
+\end{blackframe}
+
+\end{document}
+
+% Made with Bob
